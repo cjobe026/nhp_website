@@ -1,0 +1,15 @@
+{
+  "hosting": {
+    "public": "public",  // Location of static files to be served
+    "rewrites": [
+      {
+        "source": "/**",  // Catch all route for SSR
+        "function": "nextApp"  // Points to the SSR function
+      }
+    ]
+  },
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs22"
+  }
+}
