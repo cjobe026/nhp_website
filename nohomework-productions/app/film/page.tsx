@@ -1,19 +1,29 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';  // Use this to get query parameters in Next.js 13+
 
 import { films } from '../constants';  // Assuming your film data is in constants.js or constants.ts
 
-export default function FilmPage() {
+// Define the Film type based on your constants
+type Film = {
+  name: string;
+  Year: string;
+  Starring: string;
+  Image_src: string;
+  Awards: string[];
+  YouTubeLink: string;
+};
+
+function FilmPageContent() {
   const searchParams = useSearchParams();
   const filmName = searchParams.get('film');  // Get the 'film' query parameter
-  const [filmData, setFilmData] = useState(null);
+  const [filmData, setFilmData] = useState<Film | null>(null);
 
   useEffect(() => {
     if (filmName) {
       const selectedFilm = films.find((f) => f.name.toLowerCase() === filmName.toLowerCase());
-      setFilmData(selectedFilm);
+      setFilmData(selectedFilm || null);
     }
   }, [filmName]);
 
@@ -37,8 +47,15 @@ export default function FilmPage() {
             ))}
           </ul>
         </div>
-
       </div>
     </div>
+  );
+}
+
+export default function FilmPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <FilmPageContent />
+    </Suspense>
   );
 }

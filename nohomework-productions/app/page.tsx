@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+
 export default function Home() {
   useEffect(() => {
     // JavaScript parallax effect
@@ -26,12 +25,13 @@ export default function Home() {
         
         {/* Parallax Background Image */}
         <div className="parallax-bg absolute inset-0 z-0">
-          <Image
-            src="/some.png" // Put your image file here or use a URL
+          <img
             alt="Film Production"
-            layout="fill"
-            style={{ objectFit: 'cover' }}  
-            className="object-cover"
+            loading="lazy"
+            decoding="async"
+            style={{ position: 'absolute', height: '100%', width: '100%', left: 0, top: 0, right: 0, bottom: 0, objectFit: 'cover', color: 'transparent' }}
+            sizes="100vw"
+            src="/some.png"
           />
         </div>
         
@@ -49,24 +49,28 @@ export default function Home() {
       {/* 3x3 Grid Layout Section with Black Background */}
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4 py-8 relative z-20 bg-black">
         <div className=" p-4 text-center">
-        {/* <Link href="/" className="hover:text-gray-400">Home</Link> */}
-          <Image
-              src="/donor-selection.png" // Put your image file here or use a URL
-              alt="Film Production"
-              width={1200}   // Specify the width of the image
-              height={800}   // Specify the height of the image
-              
-            />
+          <img
+            alt="Film Production"
+            loading="lazy"
+            width={1200}
+            height={800}
+            decoding="async"
+            style={{ color: 'transparent' }}
+            srcSet="/donor-selection.png 1x, /donor-selection.png 2x"
+            src="/donor-selection.png"
+          />
         </div>
         <div className=" p-4 text-center">
-        {/* <Link href="/" className="hover:text-gray-400">Home</Link> */}
-          <Image
-              src="/donor-selection.png" // Put your image file here or use a URL
-              alt="Film Production"
-              width={1200}   // Specify the width of the image
-              height={800}   // Specify the height of the image
-              
-            />
+          <img
+            alt="Film Production"
+            loading="lazy"
+            width={1200}
+            height={800}
+            decoding="async"
+            style={{ color: 'transparent' }}
+            srcSet="/donor-selection.png 1x, /donor-selection.png 2x"
+            src="/donor-selection.png"
+          />
         </div>
         <div className="bg-gray-300 p-4 text-center">
           <h4 className="font-bold text-lg">Item 3</h4>
