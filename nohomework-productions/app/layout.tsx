@@ -25,7 +25,7 @@ export default function RootLayout({
       <body
         className={`${playfair_display.variable} antialiased`}
       >
-            <header className="text-white p-4">
+            <header className="text-neutral-800 p-4">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-3md font-bold">NoHomework Productions</h1>
           {/* Navbar */}

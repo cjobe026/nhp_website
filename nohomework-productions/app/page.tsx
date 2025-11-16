@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col overflow-hidden">
       {/* Main Content */}
-      <main className="relative flex-grow flex items-center justify-center bg-black h-screen">
+      <main className="relative flex-grow flex items-center justify-center bg-warm-off-white h-screen">
         
         {/* Parallax Background Image */}
         <div className="parallax-bg absolute inset-0 z-0">

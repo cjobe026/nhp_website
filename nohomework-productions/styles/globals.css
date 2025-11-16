@@ -4,16 +4,11 @@
 @tailwind utilities;
 
 :root {
-  --background: #171717;
-  --foreground: #ffffff;
+  --background: oklch(98.7% 0.022 95.277);
+  --foreground: #3D3D3D;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #171717;
-    --foreground: #ffffff;
-  }
-}
+
 
 body {
   color: var(--foreground);
@@ -22,6 +17,4 @@ body {
 }
 
 /* You can also use Tailwind’s dark mode utilities if desired */
-body {
-  @apply bg-black text-white; /* Ensures black background and white text */
-}
+
