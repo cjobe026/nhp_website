@@ -1,104 +1,243 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { films } from './constants';
+import Link from 'next/link';
+import { colors } from './colors';
 
 export default function Home() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  
+  const carouselSlides = [
+    {
+      image: '/some.png',
+      title: 'Latest Production Updates',
+      subtitle: 'Behind the scenes of our newest projects',
+      link: '/films',
+      type: 'page'
+    },
+    {
+      image: '/donor-selection.png', 
+      title: 'DONOR - Award Winner',
+      subtitle: 'Experience our acclaimed short film',
+      link: '/film?film=DONOR',
+      type: 'film'
+    },
+    {
+      image: '/Old-Hollywood.jpg',
+      title: 'Classic Cinema Inspiration', 
+      subtitle: 'Our tribute to golden age filmmaking',
+      link: '/about',
+      type: 'page'
+    }
+  ];
+
   useEffect(() => {
-    // JavaScript parallax effect
-    const parallax = document.querySelector('.parallax-bg') as HTMLElement;
-    
-    window.addEventListener('scroll', () => {
+    // Auto-rotate carousel
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % carouselSlides.length);
+    }, 5000);
+
+    // Parallax effect
+    const handleScroll = () => {
       const scrollPosition = window.pageYOffset;
-      // Adjust the speed of the parallax effect by changing the factor (e.g., 0.5, 0.3)
-      parallax.style.transform = `translateY(${scrollPosition * 0.3}px)`;
-    });
+      const parallaxElements = document.querySelectorAll('.parallax-bg');
+      parallaxElements.forEach((element) => {
+        (element as HTMLElement).style.transform = `translateY(${scrollPosition * 0.3}px)`;
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
     
     return () => {
-      window.removeEventListener('scroll', () => {});
+      clearInterval(interval);
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [carouselSlides.length]);
 
   return (
     <div className="min-h-screen flex flex-col overflow-hidden">
       {/* Main Content */}
       <main className="relative flex-grow flex items-center justify-center bg-warm-off-white h-screen">
         
-        {/* Parallax Background Image */}
-        <div className="parallax-bg absolute inset-0 z-0">
-          <img
-            alt="Film Production"
-            loading="lazy"
-            decoding="async"
-            style={{ position: 'absolute', height: '100%', width: '100%', left: 0, top: 0, right: 0, bottom: 0, objectFit: 'cover', color: 'transparent' }}
-            sizes="100vw"
-            src="/some.png"
-          />
+        {/* Parallax Carousel Background */}
+        <div className="parallax-bg absolute inset-0 z-0 overflow-hidden">
+          {carouselSlides.map((slide, index) => (
+            <Link key={index} href={slide.link} className="absolute inset-0 cursor-pointer group">
+              <img
+                alt={slide.title}
+                loading="lazy"
+                decoding="async"
+                className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 group-hover:scale-105 ${
+                  index === currentSlide ? 'opacity-100' : 'opacity-0'
+                }`}
+                src={slide.image}
+              />
+              {/* Slide Content Overlay */}
+              <div className={`absolute inset-0 bg-black/30 flex items-center justify-center transition-opacity duration-1000 ${
+                index === currentSlide ? 'opacity-100' : 'opacity-0'
+              }`}>
+                <div className="text-center text-white p-8 max-w-2xl">
+                  <h2 className="text-4xl md:text-6xl font-bold mb-4 transform transition-transform duration-500 group-hover:scale-105">
+                    {slide.title}
+                  </h2>
+                  <p className="text-lg md:text-xl mb-6 opacity-90">
+                    {slide.subtitle}
+                  </p>
+                  <div className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full border border-white/30 hover:bg-white/30 transition-colors">
+                    <span className="mr-2">Explore</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
         
-        {/* Text Overlay (Top-left corner) */}
-        <div className="absolute top-0 left-0 p-6 md:p-12 z-10 text-white">
-          <h3 className="text-md md:text-md font-bold leading-tight mb-4">
-            No Homework Productions
-          </h3>
-          <p className="text-sml md:text-md max-w-xs md:max-w-md">
-            Join us in creating the next masterpiece in film production. Experience the magic of cinema like never before.
-          </p>
+        {/* Carousel Navigation Dots */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 flex space-x-3">
+          {carouselSlides.map((slide, index) => (
+            <button
+              key={index}
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentSlide(index);
+              }}
+              className={`group flex flex-col items-center transition-all duration-300 ${
+                index === currentSlide ? 'opacity-100' : 'opacity-70 hover:opacity-90'
+              }`}
+            >
+              <div className={`w-3 h-3 rounded-full transition-all duration-300 mb-2 ${
+                index === currentSlide ? 'bg-white scale-125' : 'bg-white/50 group-hover:bg-white/70'
+              }`} />
+              <span className="text-xs text-white/80 group-hover:text-white transition-colors">
+                {slide.title.split(' ')[0]}
+              </span>
+            </button>
+          ))}
         </div>
+        
+
       </main>
       
-      {/* 3x3 Grid Layout Section with Black Background */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4 py-8 relative z-20 bg-black">
-        <div className=" p-4 text-center">
-          <img
-            alt="Film Production"
-            loading="lazy"
-            width={1200}
-            height={800}
-            decoding="async"
-            style={{ color: 'transparent' }}
-            srcSet="/donor-selection.png 1x, /donor-selection.png 2x"
-            src="/donor-selection.png"
-          />
+      {/* Latest News Section */}
+      <section className="bg-white py-12 px-4 relative z-20">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-8 text-black">Latest News</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <article className="bg-gray-100 rounded-lg overflow-hidden shadow-md">
+              <img 
+                src="/donor-selection.png" 
+                alt="News 1" 
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4">
+                <h3 className="font-bold text-lg mb-2">DONOR Wins Best Editing Award</h3>
+                <p className="text-gray-600 text-sm mb-2">January 15, 2025</p>
+                <p className="text-gray-800">Our latest film DONOR has been recognized for outstanding editing at the Independent Film Festival...</p>
+              </div>
+            </article>
+            
+            <article className="bg-gray-100 rounded-lg overflow-hidden shadow-md">
+              <img 
+                src="/Old-Hollywood.jpg" 
+                alt="News 2" 
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4">
+                <h3 className="font-bold text-lg mb-2">New Project in Development</h3>
+                <p className="text-gray-600 text-sm mb-2">January 10, 2025</p>
+                <p className="text-gray-800">We're excited to announce our upcoming thriller project set to begin production this spring...</p>
+              </div>
+            </article>
+            
+            <article className="bg-gray-100 rounded-lg overflow-hidden shadow-md">
+              <img 
+                src="/some.png" 
+                alt="News 3" 
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4">
+                <h3 className="font-bold text-lg mb-2">Behind the Scenes: Collect Call</h3>
+                <p className="text-gray-600 text-sm mb-2">January 5, 2025</p>
+                <p className="text-gray-800">Take a look behind the scenes of our 2023 production Collect Call and the creative process...</p>
+              </div>
+            </article>
+          </div>
         </div>
-        <div className=" p-4 text-center">
-          <img
-            alt="Film Production"
-            loading="lazy"
-            width={1200}
-            height={800}
-            decoding="async"
-            style={{ color: 'transparent' }}
-            srcSet="/donor-selection.png 1x, /donor-selection.png 2x"
-            src="/donor-selection.png"
-          />
-        </div>
-        <div className="bg-gray-300 p-4 text-center">
-          <h4 className="font-bold text-lg">Item 3</h4>
-          <p>Description of the third item.</p>
-        </div>
-        <div className="bg-gray-300 p-4 text-center">
-          <h4 className="font-bold text-lg">Item 4</h4>
-          <p>Description of the fourth item.</p>
-        </div>
-        <div className="bg-gray-300 p-4 text-center">
-          <h4 className="font-bold text-lg">Item 5</h4>
-          <p>Description of the fifth item.</p>
-        </div>
-        <div className="bg-gray-300 p-4 text-center">
-          <h4 className="font-bold text-lg">Item 6</h4>
-          <p>Description of the sixth item.</p>
-        </div>
-        <div className="bg-gray-300 p-4 text-center">
-          <h4 className="font-bold text-lg">Item 7</h4>
-          <p>Description of the seventh item.</p>
-        </div>
-        <div className="bg-gray-300 p-4 text-center">
-          <h4 className="font-bold text-lg">Item 8</h4>
-          <p>Description of the eighth item.</p>
-        </div>
-        <div className="bg-gray-300 p-4 text-center">
-          <h4 className="font-bold text-lg">Item 9</h4>
-          <p>Description of the ninth item.</p>
+      </section>
+      
+      {/* Project Timeline Section */}
+      <section className="bg-black py-20 px-4 relative z-20 overflow-hidden">
+        {/* Black Construction Paper Texture */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            radial-gradient(circle at 20% 30%, rgba(40, 40, 40, 0.3) 1px, transparent 1px),
+            radial-gradient(circle at 80% 70%, rgba(60, 60, 60, 0.2) 1px, transparent 1px),
+            radial-gradient(circle at 40% 80%, rgba(30, 30, 30, 0.4) 1px, transparent 1px),
+            radial-gradient(circle at 90% 20%, rgba(50, 50, 50, 0.3) 1px, transparent 1px)
+          `,
+          backgroundSize: '100px 100px, 150px 150px, 80px 80px, 120px 120px'
+        }}></div>
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <h2 className="text-4xl font-bold text-center mb-16 text-white font-thin tracking-wide">PROJECT TIMELINE</h2>
+          
+          {/* Sleek Timeline */}
+          <div className="relative flex justify-between items-center">
+            {/* Connecting Line */}
+            <div className="absolute top-1/2 left-0 right-0 h-px" style={{background: `linear-gradient(90deg, transparent 0%, ${colors.accent.primary} 20%, ${colors.accent.primary} 80%, transparent 100%)`}}></div>
+            
+            {films.filter(film => film.TimelinePosition).sort((a, b) => b.TimelinePosition - a.TimelinePosition).map((film, index) => {
+              const isActive = film.Status === 'In Production';
+              const isComplete = film.Status === 'Released';
+              
+              return (
+                <Link key={index} href={`/film?film=${encodeURIComponent(film.name)}`} className="relative flex flex-col items-center group cursor-pointer">
+                  {/* Timeline Dot */}
+                  <div className={`w-6 h-6 rounded-full border-2 transition-all duration-500 group-hover:scale-125 ${
+                    isComplete ? '' :
+                    isActive ? 'animate-pulse' :
+                    film.Status === 'Seeking Investment' ? '' :
+                    'bg-transparent border-gray-500'
+                  }`} style={{
+                    backgroundColor: isComplete ? colors.status.released :
+                                   isActive ? colors.accent.primary :
+                                   film.Status === 'Seeking Investment' ? colors.status.investment :
+                                   'transparent',
+                    borderColor: isComplete ? colors.status.released :
+                               isActive ? colors.accent.primary :
+                               film.Status === 'Seeking Investment' ? colors.status.investment :
+                               '#6b7280'
+                  }}></div>
+                  
+                  {/* Project Info */}
+                  <div className="mt-8 text-center transform transition-all duration-300 group-hover:-translate-y-2">
+                    <div className="bg-gray-900 rounded-xl p-4 border border-gray-800 shadow-2xl backdrop-blur-sm w-48 h-60 flex flex-col justify-between">
+                      <div className="w-20 h-20 mx-auto mb-4 rounded-lg overflow-hidden">
+                        <img src={film.Image_src} alt={film.name} className="w-full h-full object-cover" />
+                      </div>
+                      <h3 className="text-white font-bold text-lg mb-1">{film.name}</h3>
+                      <p className="text-gray-400 text-sm mb-3">{film.Year}</p>
+                      <div className="flex flex-col gap-2">
+                        <div className={`inline-block px-3 py-1 rounded-full text-xs font-medium text-white`} style={{
+                          backgroundColor: isComplete ? colors.status.released :
+                                         isActive ? colors.accent.primary :
+                                         film.Status === 'Seeking Investment' ? colors.status.investment :
+                                         '#dc2626',
+                          color: isActive ? colors.neutral.black : colors.neutral.white
+                        }}>
+                          {film.Status}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </section>
 

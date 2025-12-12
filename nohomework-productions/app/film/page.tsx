@@ -32,7 +32,7 @@ function FilmPageContent() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-white">
       <div className="text-center">
         <h1 className="text-3xl font-bold">{filmData.name} ({filmData.Year})</h1>
         <div className="mt-6">
