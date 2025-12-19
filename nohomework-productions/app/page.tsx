@@ -125,52 +125,58 @@ export default function Home() {
       {/* Latest News Section */}
       <section className="bg-white py-12 px-4 relative z-20">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-8 text-black">Latest News</h2>
+          <h2 className="text-4xl font-bold text-center mb-16 text-black font-thin tracking-wide">LATEST NEWS</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <article className="bg-gray-100 rounded-lg overflow-hidden shadow-md">
-              <img 
-                src="/donor-selection.png" 
-                alt="News 1" 
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="font-bold text-lg mb-2">DONOR Wins Best Editing Award</h3>
-                <p className="text-gray-600 text-sm mb-2">January 15, 2025</p>
-                <p className="text-gray-800">Our latest film DONOR has been recognized for outstanding editing at the Independent Film Festival...</p>
-              </div>
-            </article>
+            <Link href="/news?article=donor-award" className="group">
+              <article className="bg-gray-100 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                <img 
+                  src="/donor-selection.png" 
+                  alt="News 1" 
+                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="p-4">
+                  <h3 className="font-bold text-lg mb-2 group-hover:text-blue-600 transition-colors">DONOR Wins Best Editing Award</h3>
+                  <p className="text-gray-600 text-sm mb-2">January 15, 2025</p>
+                  <p className="text-gray-800">Our latest film DONOR has been recognized for outstanding editing at the Independent Film Festival...</p>
+                </div>
+              </article>
+            </Link>
             
-            <article className="bg-gray-100 rounded-lg overflow-hidden shadow-md">
-              <img 
-                src="/Old-Hollywood.jpg" 
-                alt="News 2" 
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="font-bold text-lg mb-2">New Project in Development</h3>
-                <p className="text-gray-600 text-sm mb-2">January 10, 2025</p>
-                <p className="text-gray-800">We're excited to announce our upcoming thriller project set to begin production this spring...</p>
-              </div>
-            </article>
+            <Link href="/news?article=new-project" className="group">
+              <article className="bg-gray-100 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                <img 
+                  src="/Old-Hollywood.jpg" 
+                  alt="News 2" 
+                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="p-4">
+                  <h3 className="font-bold text-lg mb-2 group-hover:text-blue-600 transition-colors">New Project in Development</h3>
+                  <p className="text-gray-600 text-sm mb-2">January 10, 2025</p>
+                  <p className="text-gray-800">We're excited to announce our upcoming thriller project set to begin production this spring...</p>
+                </div>
+              </article>
+            </Link>
             
-            <article className="bg-gray-100 rounded-lg overflow-hidden shadow-md">
-              <img 
-                src="/some.png" 
-                alt="News 3" 
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="font-bold text-lg mb-2">Behind the Scenes: Collect Call</h3>
-                <p className="text-gray-600 text-sm mb-2">January 5, 2025</p>
-                <p className="text-gray-800">Take a look behind the scenes of our 2023 production Collect Call and the creative process...</p>
-              </div>
-            </article>
+            <Link href="/news?article=collect-call-bts" className="group">
+              <article className="bg-gray-100 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                <img 
+                  src="/some.png" 
+                  alt="News 3" 
+                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="p-4">
+                  <h3 className="font-bold text-lg mb-2 group-hover:text-blue-600 transition-colors">Behind the Scenes: Collect Call</h3>
+                  <p className="text-gray-600 text-sm mb-2">January 5, 2025</p>
+                  <p className="text-gray-800">Take a look behind the scenes of our 2023 production Collect Call and the creative process...</p>
+                </div>
+              </article>
+            </Link>
           </div>
         </div>
       </section>
       
       {/* Project Timeline Section */}
-      <section className="bg-black py-20 px-4 relative z-20 overflow-hidden">
+      <section className="bg-white py-20 px-4 relative z-20 overflow-hidden">
         {/* Black Construction Paper Texture */}
         <div className="absolute inset-0" style={{
           backgroundImage: `
@@ -183,7 +189,7 @@ export default function Home() {
         }}></div>
         
         <div className="max-w-7xl mx-auto relative z-10">
-          <h2 className="text-4xl font-bold text-center mb-16 text-white font-thin tracking-wide">PROJECT TIMELINE</h2>
+          <h2 className="text-4xl font-bold text-center mb-16 text-black font-thin tracking-wide">PROJECT TIMELINE</h2>
           
           {/* Sleek Timeline */}
           <div className="relative flex justify-between items-center">
@@ -192,7 +198,8 @@ export default function Home() {
             
             {films.filter(film => film.TimelinePosition).sort((a, b) => b.TimelinePosition - a.TimelinePosition).map((film, index) => {
               const isActive = film.Status === 'In Production';
-              const isComplete = film.Status === 'Released';
+              const isComplete = film.Status === 'Released' || film.Status === 'Now Showing';
+              const isPreProduction = film.Status === 'In Pre-Production';
               
               return (
                 <Link key={index} href={`/film?film=${encodeURIComponent(film.name)}`} className="relative flex flex-col items-center group cursor-pointer">
@@ -200,36 +207,45 @@ export default function Home() {
                   <div className={`w-6 h-6 rounded-full border-2 transition-all duration-500 group-hover:scale-125 ${
                     isComplete ? '' :
                     isActive ? 'animate-pulse' :
-                    film.Status === 'Seeking Investment' ? '' :
+                    isPreProduction ? '' :
                     'bg-transparent border-gray-500'
                   }`} style={{
-                    backgroundColor: isComplete ? colors.status.released :
-                                   isActive ? colors.accent.primary :
-                                   film.Status === 'Seeking Investment' ? colors.status.investment :
+                    backgroundColor: film.Status === 'Now Showing' ? '#d97706' :
+                                   isComplete ? colors.status.released :
+                                   isActive ? '#1e40af' :
+                                   isPreProduction ? '#1e40af' :
                                    'transparent',
-                    borderColor: isComplete ? colors.status.released :
-                               isActive ? colors.accent.primary :
-                               film.Status === 'Seeking Investment' ? colors.status.investment :
+                    borderColor: film.Status === 'Now Showing' ? '#d97706' :
+                               isComplete ? colors.status.released :
+                               isActive ? '#1e40af' :
+                               isPreProduction ? '#1e40af' :
                                '#6b7280'
                   }}></div>
                   
                   {/* Project Info */}
                   <div className="mt-8 text-center transform transition-all duration-300 group-hover:-translate-y-2">
-                    <div className="bg-gray-900 rounded-xl p-4 border border-gray-800 shadow-2xl backdrop-blur-sm w-48 h-60 flex flex-col justify-between">
-                      <div className="w-20 h-20 mx-auto mb-4 rounded-lg overflow-hidden">
+                    <div className="bg-gray-100 rounded-xl border border-gray-300 shadow-2xl backdrop-blur-sm w-48 h-60 flex flex-col overflow-hidden">
+                      <div className="w-full h-32 overflow-hidden">
                         <img src={film.Image_src} alt={film.name} className="w-full h-full object-cover" />
                       </div>
-                      <h3 className="text-white font-bold text-lg mb-1">{film.name}</h3>
-                      <p className="text-gray-400 text-sm mb-3">{film.Year}</p>
-                      <div className="flex flex-col gap-2">
-                        <div className={`inline-block px-3 py-1 rounded-full text-xs font-medium text-white`} style={{
-                          backgroundColor: isComplete ? colors.status.released :
-                                         isActive ? colors.accent.primary :
-                                         film.Status === 'Seeking Investment' ? colors.status.investment :
-                                         '#dc2626',
-                          color: isActive ? colors.neutral.black : colors.neutral.white
-                        }}>
-                          {film.Status}
+                      <div className="p-4 flex-1 flex flex-col justify-between">
+                        <h3 className="text-black font-bold text-lg mb-1">{film.name}</h3>
+                        <p className="text-gray-600 text-sm mb-3">{film.Year}</p>
+                        <div className="flex flex-col gap-2">
+                          <div className={`inline-block px-3 py-1 rounded-full text-xs font-medium`} style={{
+                            backgroundColor: film.Status === 'Now Showing' ? '#d97706' :
+                                           isComplete ? colors.status.released :
+                                           isActive ? '#3b82f6' :
+                                           isPreProduction ? '#3b82f6' :
+                                           '#dc2626',
+                            color: film.Status === 'Now Showing' ? '#ffffff' :
+                                 isActive ? '#ffffff' :
+                                 isPreProduction ? '#ffffff' :
+                                 isComplete ? colors.neutral.white :
+                                 colors.neutral.white
+                          }}>
+                            {film.Status}
+                          </div>
                         </div>
                       </div>
                     </div>

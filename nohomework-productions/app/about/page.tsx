@@ -21,27 +21,37 @@ export default function About() {
     ];
   
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-white">
+      <div className="min-h-screen bg-white pt-24 pb-16">
         {/* About the Company Section */}
-        <section className="w-full max-w-4xl text-center py-10">
-          <h2 className="text-4xl font-bold">About NHP</h2>
-          <p className="mt-4 text-xl">
-            NHP - oil baron zemography
+        <section className="w-full max-w-4xl mx-auto text-center py-12 px-6">
+          <h2 className="text-4xl font-bold mb-6">About NHP</h2>
+          <p className="text-xl leading-relaxed text-gray-700">
+            NoHomework Productions is a Louisiana-based film production studio founded by Wesley Boone and Ian Jobe. The studio represents a collective creative effort from frequent collaborators, both local and beyond. We are passionate about making films that truly connect with people—and ensuring our crew enjoys the process every step of the way.
           </p>
         </section>
   
         {/* Team Section */}
-        <section className="w-full max-w-6xl py-12">
-          <h3 className="text-3xl font-bold text-center mb-8">Meet Our Team</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
+        <section className="w-full max-w-6xl mx-auto py-12 px-6">
+          <h3 className="text-3xl font-bold text-center mb-12">Meet Our Team</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
             {teamMembers.map((member, index) => (
               <div key={index} className="text-center">
-                <img
-                  className="w-64 h-64 mx-auto rounded-xl shadow-lg mb-4 object-cover"
-                  src={member.imageUrl}
-                  alt={member.name}
-                />
-                <h4 className="text-xl font-semibold">
+                {member.name === 'Wesley Boone' ? (
+                  <a href="https://www.imdb.com/name/nm12478593" target="_blank" rel="noopener noreferrer">
+                    <img
+                      className="w-64 h-64 mx-auto rounded-xl shadow-lg mb-4 object-cover hover:opacity-80 transition-opacity cursor-pointer"
+                      src={member.imageUrl}
+                      alt={member.name}
+                    />
+                  </a>
+                ) : (
+                  <img
+                    className="w-64 h-64 mx-auto rounded-xl shadow-lg mb-4 object-cover"
+                    src={member.imageUrl}
+                    alt={member.name}
+                  />
+                )}
+                <h4 className="text-xl font-semibold mb-1">
                   {member.name === 'Wesley Boone' ? (
                     <a href="https://www.imdb.com/name/nm12478593" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors">
                       {member.name}
@@ -50,8 +60,8 @@ export default function About() {
                     member.name
                   )}
                 </h4>
-                <p className="text-md text-gray-500">{member.role}</p>
-                <p className="mt-2 text-sm text-gray-700">{member.about}</p>
+                <p className="text-md text-gray-500 mb-3">{member.role}</p>
+                <p className="text-sm text-gray-600 leading-relaxed">{member.about}</p>
               </div>
             ))}
           </div>
