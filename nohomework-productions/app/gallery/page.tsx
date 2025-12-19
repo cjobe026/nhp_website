@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { VideoIcon, PosterIcon } from '../components/Icons';
 
-const galleryData = {
+const galleryData: Record<string, { images: Array<{ src: string; alt: string; type: string; height: string; artist?: string; artistInfo?: string }> }> = {
   'collect call': {
     images: [
       { src: '/scene-photos/collect-call/poster1.jpg', alt: 'Official Poster', type: 'Poster', height: 'tall', artist: 'Artist Name', artistInfo: 'Brief description of the artist or their work on this poster' },
@@ -37,14 +37,14 @@ const galleryData = {
 function GalleryContent() {
   const searchParams = useSearchParams();
   const filmName = searchParams.get('film');
-  const [lightboxImage, setLightboxImage] = useState(null);
+  const [lightboxImage, setLightboxImage] = useState<{ src: string; alt: string; type: string; height: string; artist?: string; artistInfo?: string; film: string; filteredImages: Array<{ src: string; alt: string; type: string; height: string; artist?: string; artistInfo?: string }> } | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [filmData, setFilmData] = useState(null);
+  const [filmData, setFilmData] = useState<{ images: Array<{ src: string; alt: string; type: string; height: string; artist?: string; artistInfo?: string }> } | null>(null);
   const [filter, setFilter] = useState('BTS');
 
   useEffect(() => {
     if (filmName) {
-      const data = galleryData[filmName.toLowerCase()];
+      const data = galleryData[filmName.toLowerCase() as keyof typeof galleryData];
       setFilmData(data);
     }
   }, [filmName]);
@@ -63,14 +63,7 @@ function GalleryContent() {
     );
   }
 
-  const getHeightClass = (height) => {
-    switch (height) {
-      case 'short': return 'row-span-1';
-      case 'medium': return 'row-span-2';
-      case 'tall': return 'row-span-3';
-      default: return 'row-span-2';
-    }
-  };
+
 
   return (
     <div className="min-h-screen bg-white pt-24 pb-16">
@@ -117,7 +110,7 @@ function GalleryContent() {
             : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
         }`}>
           {filmData.images.filter(image => image.type === filter).map((image, filteredIndex) => {
-            const originalIndex = filmData.images.findIndex(img => img === image);
+
             if (image.type === 'Poster') {
               return (
                 <div 

@@ -126,7 +126,7 @@ const newsArticles = [
 function NewsPageContent() {
   const searchParams = useSearchParams();
   const articleId = searchParams.get('article');
-  const [article, setArticle] = useState(null);
+  const [article, setArticle] = useState<typeof newsArticles[0] | null>(null);
 
   useEffect(() => {
     if (articleId) {
@@ -180,11 +180,11 @@ function NewsPageContent() {
             
             {/* Sidebar */}
             <div className="space-y-6">
-              {(article.relatedLinks || article.getRelatedLinks) && (
+              {article.relatedLinks && (
                 <div className="bg-white rounded-xl shadow-lg p-6">
                   <h3 className="text-xl font-bold mb-4 text-gray-900">Related</h3>
                   <div className="space-y-4">
-                    {(article.getRelatedLinks ? article.getRelatedLinks() : article.relatedLinks).map((link, index) => (
+                    {article.relatedLinks.map((link, index) => (
                       <Link key={index} href={link.url} className="block group">
                         <div className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
                           <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">

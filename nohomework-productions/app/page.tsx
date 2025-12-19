@@ -152,7 +152,7 @@ export default function Home() {
                 <div className="p-4">
                   <h3 className="font-bold text-lg mb-2 group-hover:text-blue-600 transition-colors">New Project in Development</h3>
                   <p className="text-gray-600 text-sm mb-2">January 10, 2025</p>
-                  <p className="text-gray-800">We're excited to announce our upcoming thriller project set to begin production this spring...</p>
+                  <p className="text-gray-800">We&apos;re excited to announce our upcoming thriller project set to begin production this spring...</p>
                 </div>
               </article>
             </Link>

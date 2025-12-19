@@ -1,6 +1,6 @@
 'use client';
 
-import type { Metadata } from "next";
+// import type { Metadata } from "next";
 import { Playfair_Display } from "next/font/google";
 import "../styles/globals.css";
 import Link from 'next/link';

@@ -22,6 +22,8 @@ type Film = {
   Cast?: { name: string; character: string }[];
   Crew?: { name: string; role: string }[];
   posterCount?: number;
+  fullMovieLink?: string;
+  relatedArticles?: { id: string; title: string; date: string; excerpt: string; image: string }[];
 };
 
 function FilmPageContent() {
