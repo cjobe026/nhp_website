@@ -70,7 +70,7 @@ export const films =
       Starring: 'Casey Groves, Tara Tingle',
       Image_src: "/scene-photos/after/card.png",
       Awards: [],
-      YouTubeLink: "https://www.youtube.com/embed/r_Xb3dQqUbE?si=LyHVdv5ZKaU2Mx4T",
+      YouTubeLink: "https://www.youtube.com/embed/1vrS6bhIf8c",
       Description: "Short Sci-Fi",
       Synopsis: "A couple is forced to confront the meaning of love, loss and legacy in a world where death is now a choice.",
       Status: "Now Showing",

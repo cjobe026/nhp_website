@@ -2,21 +2,21 @@ export default function About() {
     const teamMembers = [
       {
         name: 'Wesley Boone',
-        role: 'Director',
+        role: 'Director and Executive Producer',
         imageUrl: '/wes.jpeg',
         about: 'Writer, director, actor with over a decade of experience starting at childhood and the leader of our pack.',
       },
       {
         name: 'Justus Boone',
-        role: 'CTO',
+        role: 'Executive Producer',
         imageUrl: '/justus.jpeg',
-        about: 'FULL OF PISS AND VIN',
+        about: 'Glue guy for our productions keeps the shoot on track and everyone fed and happy',
       },
       {
         name: 'Caleb Jobe',
-        role: 'Whittle guy',
-        imageUrl: '/caleb.jpg.webp',
-        about: 'mhm',
+        role: 'Producer & Production Designer',
+        imageUrl: '/caleb.jpg',
+        about: 'Dresses scenes and designs props to bring our scenes to life',
       }
     ];
   
