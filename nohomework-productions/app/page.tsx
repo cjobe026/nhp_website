@@ -278,7 +278,7 @@ export default function Home() {
           <div className="relative pt-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pb-6">
               {films.filter(film => film.TimelinePosition).sort((a, b) => b.TimelinePosition - a.TimelinePosition).slice(0, 4).map((film, index) => {
-                const posterPath = `/scene-photos/${film.name === 'The Present' ? 'christmas-movie' : film.name.toLowerCase().replace(' ', '-')}/poster1.${film.name === 'The Present' || film.name === 'Dead Air' || film.name === 'Donor' ? 'png' : 'jpg'}`;
+                const posterPath = (film as any).posterPath || `/scene-photos/${film.name.toLowerCase().replace(' ', '-')}/poster1.jpg`;
                 
                 return (
                   <div key={index} className="relative pt-6 pb-6 max-w-56 mx-auto">

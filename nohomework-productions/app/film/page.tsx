@@ -11,6 +11,7 @@ type Film = {
   Year: string;
   Starring: string;
   Image_src: string;
+  posterPath?: string;
   Awards: string[];
   YouTubeLink: string;
   Synopsis?: string;
@@ -99,7 +100,7 @@ function FilmPageContent() {
           <div className="lg:col-span-1">
             <Link href={`/gallery?film=${encodeURIComponent(filmData.name)}`} className="group block relative">
               <img 
-                src={`/scene-photos/${filmData.name === 'The Present' ? 'christmas-movie' : filmData.name.toLowerCase().replace(' ', '-')}/poster1.${filmData.name === 'The Present' || filmData.name === 'Dead Air' || filmData.name === 'Donor' ? 'png' : 'jpg'}`}
+                src={(filmData as any).posterPath || filmData.Image_src}
                 alt={`${filmData.name} Poster`}
                 className="w-full h-[500px] object-fill rounded-lg shadow-xl group-hover:opacity-80 transition-opacity cursor-pointer"
               />

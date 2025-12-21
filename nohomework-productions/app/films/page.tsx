@@ -11,7 +11,7 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
   
           {films.sort((a, b) => parseInt(b.Year) - parseInt(a.Year)).map((film, index) => {
-            const posterPath = `/scene-photos/${film.name === 'The Present' ? 'christmas-movie' : film.name.toLowerCase().replace(' ', '-')}/poster1.${film.name === 'The Present' || film.name === 'Dead Air' || film.name === 'Donor' ? 'png' : 'jpg'}`;
+            const posterPath = (film as any).posterPath || `/scene-photos/${film.name.toLowerCase().replace(' ', '-')}/poster1.jpg`;
             
             return (
               <Link key={index} href={`/film?film=${encodeURIComponent(film.name)}`} className="hover:opacity-80 transition-opacity">
