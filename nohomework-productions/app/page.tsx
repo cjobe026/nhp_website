@@ -191,48 +191,113 @@ export default function Home() {
         <div className="max-w-7xl mx-auto relative z-10">
           <h2 className="text-4xl font-bold text-center mb-16 text-black font-thin tracking-wide">PROJECT TIMELINE</h2>
           
-          {/* Sleek Timeline */}
-          <div className="relative flex justify-between items-center">
-            {/* Connecting Line */}
-            <div className="absolute top-1/2 left-0 right-0 h-px" style={{background: `linear-gradient(90deg, transparent 0%, ${colors.accent.primary} 20%, ${colors.accent.primary} 80%, transparent 100%)`}}></div>
-            
-            {films.filter(film => film.TimelinePosition).sort((a, b) => b.TimelinePosition - a.TimelinePosition).map((film, index) => {
-              const isActive = film.Status === 'In Production';
-              const isComplete = film.Status === 'Released' || film.Status === 'Now Showing';
-              const isPreProduction = film.Status === 'In Pre-Production';
+          {/* Mobile-First Timeline */}
+          <div className="relative">
+            {/* Desktop: Horizontal Timeline */}
+            <div className="hidden lg:flex justify-between items-center">
+              {/* Connecting Line */}
+              <div className="absolute top-1/2 left-0 right-0 h-px" style={{background: `linear-gradient(90deg, transparent 0%, ${colors.accent.primary} 20%, ${colors.accent.primary} 80%, transparent 100%)`}}></div>
               
-              return (
-                <Link key={index} href={`/film?film=${encodeURIComponent(film.name)}`} className="relative flex flex-col items-center group cursor-pointer">
-                  {/* Timeline Dot */}
-                  <div className={`w-6 h-6 rounded-full border-2 transition-all duration-500 group-hover:scale-125 ${
-                    isComplete ? '' :
-                    isActive ? 'animate-pulse' :
-                    isPreProduction ? '' :
-                    'bg-transparent border-gray-500'
-                  }`} style={{
-                    backgroundColor: film.Status === 'Now Showing' ? '#d97706' :
-                                   isComplete ? colors.status.released :
-                                   isActive ? '#1e40af' :
-                                   isPreProduction ? '#1e40af' :
-                                   'transparent',
-                    borderColor: film.Status === 'Now Showing' ? '#d97706' :
-                               isComplete ? colors.status.released :
-                               isActive ? '#1e40af' :
-                               isPreProduction ? '#1e40af' :
-                               '#6b7280'
-                  }}></div>
-                  
-                  {/* Project Info */}
-                  <div className="mt-8 text-center transform transition-all duration-300 group-hover:-translate-y-2">
-                    <div className="bg-gray-100 rounded-xl border border-gray-300 shadow-2xl backdrop-blur-sm w-48 h-60 flex flex-col overflow-hidden">
-                      <div className="w-full h-32 overflow-hidden">
-                        <img src={film.Image_src} alt={film.name} className="w-full h-full object-cover" />
+              {films.filter(film => film.TimelinePosition).sort((a, b) => b.TimelinePosition - a.TimelinePosition).map((film, index) => {
+                const isActive = film.Status === 'In Production';
+                const isComplete = film.Status === 'Released' || film.Status === 'Now Showing';
+                const isPreProduction = film.Status === 'In Pre-Production';
+                
+                return (
+                  <Link key={index} href={`/film?film=${encodeURIComponent(film.name)}`} className="relative flex flex-col items-center group cursor-pointer">
+                    {/* Timeline Dot */}
+                    <div className={`w-6 h-6 rounded-full border-2 transition-all duration-500 group-hover:scale-125 ${
+                      isComplete ? '' :
+                      isActive ? 'animate-pulse' :
+                      isPreProduction ? '' :
+                      'bg-transparent border-gray-500'
+                    }`} style={{
+                      backgroundColor: film.Status === 'Now Showing' ? '#d97706' :
+                                     isComplete ? colors.status.released :
+                                     isActive ? '#1e40af' :
+                                     isPreProduction ? '#1e40af' :
+                                     'transparent',
+                      borderColor: film.Status === 'Now Showing' ? '#d97706' :
+                                 isComplete ? colors.status.released :
+                                 isActive ? '#1e40af' :
+                                 isPreProduction ? '#1e40af' :
+                                 '#6b7280'
+                    }}></div>
+                    
+                    {/* Project Info */}
+                    <div className="mt-8 text-center transform transition-all duration-300 group-hover:-translate-y-2">
+                      <div className="bg-gray-100 rounded-xl border border-gray-300 shadow-2xl backdrop-blur-sm w-48 h-60 flex flex-col overflow-hidden">
+                        <div className="w-full h-32 overflow-hidden">
+                          <img src={film.Image_src} alt={film.name} className="w-full h-full object-cover" />
+                        </div>
+                        <div className="p-4 flex-1 flex flex-col justify-between">
+                          <h3 className="text-black font-bold text-lg mb-1">{film.name}</h3>
+                          <p className="text-gray-600 text-sm mb-3">{film.Year}</p>
+                          <div className="flex flex-col gap-2">
+                            <div className={`inline-block px-3 py-1 rounded-full text-xs font-medium`} style={{
+                              backgroundColor: film.Status === 'Now Showing' ? '#d97706' :
+                                             isComplete ? colors.status.released :
+                                             isActive ? '#3b82f6' :
+                                             isPreProduction ? '#3b82f6' :
+                                             '#dc2626',
+                              color: film.Status === 'Now Showing' ? '#ffffff' :
+                                   isActive ? '#ffffff' :
+                                   isPreProduction ? '#ffffff' :
+                                   isComplete ? colors.neutral.white :
+                                   colors.neutral.white
+                            }}>
+                              {film.Status}
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div className="p-4 flex-1 flex flex-col justify-between">
-                        <h3 className="text-black font-bold text-lg mb-1">{film.name}</h3>
-                        <p className="text-gray-600 text-sm mb-3">{film.Year}</p>
-                        <div className="flex flex-col gap-2">
-                          <div className={`inline-block px-3 py-1 rounded-full text-xs font-medium`} style={{
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+            
+            {/* Mobile: Vertical Timeline */}
+            <div className="lg:hidden space-y-8">
+              {/* Connecting Line */}
+              <div className="absolute left-6 top-0 bottom-0 w-px" style={{background: `linear-gradient(180deg, transparent 0%, ${colors.accent.primary} 10%, ${colors.accent.primary} 90%, transparent 100%)`}}></div>
+              
+              {films.filter(film => film.TimelinePosition).sort((a, b) => b.TimelinePosition - a.TimelinePosition).map((film, index) => {
+                const isActive = film.Status === 'In Production';
+                const isComplete = film.Status === 'Released' || film.Status === 'Now Showing';
+                const isPreProduction = film.Status === 'In Pre-Production';
+                
+                return (
+                  <Link key={index} href={`/film?film=${encodeURIComponent(film.name)}`} className="relative flex items-center group cursor-pointer">
+                    {/* Timeline Dot */}
+                    <div className={`w-6 h-6 rounded-full border-2 transition-all duration-500 group-hover:scale-125 mr-6 flex-shrink-0 ${
+                      isComplete ? '' :
+                      isActive ? 'animate-pulse' :
+                      isPreProduction ? '' :
+                      'bg-transparent border-gray-500'
+                    }`} style={{
+                      backgroundColor: film.Status === 'Now Showing' ? '#d97706' :
+                                     isComplete ? colors.status.released :
+                                     isActive ? '#1e40af' :
+                                     isPreProduction ? '#1e40af' :
+                                     'transparent',
+                      borderColor: film.Status === 'Now Showing' ? '#d97706' :
+                                 isComplete ? colors.status.released :
+                                 isActive ? '#1e40af' :
+                                 isPreProduction ? '#1e40af' :
+                                 '#6b7280'
+                    }}></div>
+                    
+                    {/* Project Info */}
+                    <div className="flex-1 transform transition-all duration-300 group-hover:translate-x-2">
+                      <div className="bg-gray-100 rounded-xl border border-gray-300 shadow-lg backdrop-blur-sm flex overflow-hidden">
+                        <div className="w-24 h-24 flex-shrink-0">
+                          <img src={film.Image_src} alt={film.name} className="w-full h-full object-cover" />
+                        </div>
+                        <div className="p-4 flex-1">
+                          <h3 className="text-black font-bold text-lg mb-1">{film.name}</h3>
+                          <p className="text-gray-600 text-sm mb-2">{film.Year}</p>
+                          <div className={`inline-block px-2 py-1 rounded-full text-xs font-medium`} style={{
                             backgroundColor: film.Status === 'Now Showing' ? '#d97706' :
                                            isComplete ? colors.status.released :
                                            isActive ? '#3b82f6' :
@@ -249,10 +314,10 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              );
-            })}
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>

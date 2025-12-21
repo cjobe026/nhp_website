@@ -47,23 +47,21 @@ function FilmPageContent() {
   return (
     <div className="min-h-screen bg-white px-4 pt-24 pb-8">
       <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
+        <div className="mb-6">
           <Link href="/films" className="text-blue-600 hover:text-blue-800 inline-flex items-center text-sm">
             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             Back to Movies
           </Link>
-          <Link href={`/gallery?film=${encodeURIComponent(filmData.name)}`} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
-            View Gallery
-          </Link>
         </div>
         
         <h1 className="text-4xl font-bold text-center mb-12">{filmData.name} ({filmData.Year})</h1>
         
         {/* Media Section */}
-        <div className="mb-12">
-          <div className="w-full flex justify-center mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+          {/* Video/Media - Left side (2/3 width) */}
+          <div className="lg:col-span-2">
             {filmData.fullMovieLink ? (
               <iframe 
                 width="100%" 
@@ -74,7 +72,7 @@ function FilmPageContent() {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                 referrerPolicy="strict-origin-when-cross-origin" 
                 allowFullScreen
-                className="w-full max-w-4xl rounded-lg shadow-lg"
+                className="w-full rounded-lg shadow-lg"
               ></iframe>
             ) : filmData.YouTubeLink ? (
               <iframe 
@@ -86,16 +84,33 @@ function FilmPageContent() {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                 referrerPolicy="strict-origin-when-cross-origin" 
                 allowFullScreen
-                className="w-full max-w-4xl rounded-lg shadow-lg"
+                className="w-full rounded-lg shadow-lg"
               ></iframe>
             ) : (
               <img 
                 src={filmData.Image_src}
                 alt={`${filmData.name} Still`}
-                className="w-full max-w-4xl h-96 rounded-lg shadow-lg object-cover"
+                className="w-full h-[500px] rounded-lg shadow-lg object-cover"
               />
             )}
           </div>
+          
+          {/* Poster - Right side (1/3 width) */}
+          <div className="lg:col-span-1">
+            <Link href={`/gallery?film=${encodeURIComponent(filmData.name)}`} className="group block relative">
+              <img 
+                src={`/scene-photos/${filmData.name === 'The Present' ? 'christmas-movie' : filmData.name.toLowerCase().replace(' ', '-')}/poster1.${filmData.name === 'The Present' || filmData.name === 'Dead Air' || filmData.name === 'Donor' ? 'png' : 'jpg'}`}
+                alt={`${filmData.name} Poster`}
+                className="w-full h-[500px] object-fill rounded-lg shadow-xl group-hover:opacity-80 transition-opacity cursor-pointer"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-300 flex items-center justify-center rounded-lg">
+                <span className="text-white text-2xl font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  Gallery
+                </span>
+              </div>
+            </Link>
+          </div>
+        </div>
           
           {/* Info below media */}
           <div className="max-w-4xl mx-auto space-y-6">
@@ -117,37 +132,6 @@ function FilmPageContent() {
               </div>
             )}
           </div>
-        </div>
-        
-        {/* Gallery Section */}
-        <div className="mb-12">
-          <div className="max-w-4xl mx-auto">
-            <h3 className="text-2xl font-semibold mb-6 text-center">Behind the Scenes Gallery</h3>
-            <Link href={`/gallery?film=${encodeURIComponent(filmData.name)}`} className="group block">
-              <div className="relative overflow-hidden rounded-lg shadow-lg bg-gray-100">
-                <img 
-                  src={`/scene-photos/${filmData.name.toLowerCase().replace(' ', '-')}/bts1.jpeg`}
-                  alt={`${filmData.name} Behind the Scenes`}
-                  className="w-full h-64 md:h-80 object-cover group-hover:scale-105 transition-transform duration-500"
-                  onError={(e) => {
-                    e.currentTarget.src = filmData.Image_src;
-                  }}
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
-                  <div className="bg-white/90 group-hover:bg-white text-black px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform group-hover:scale-110">
-                    <span className="flex items-center gap-2">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                      View Gallery
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </Link>
-            <p className="text-center text-gray-600 mt-4">Explore behind-the-scenes photos, posters, and production stills</p>
-          </div>
-        </div>
         
         {/* Film Details */}
         <div className="space-y-6 mb-8">

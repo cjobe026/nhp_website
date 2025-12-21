@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import {films} from '../constants'
-import { colors } from '../colors'
 
 
 export default function About() {
