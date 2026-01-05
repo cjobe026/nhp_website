@@ -4,6 +4,13 @@ import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
+// Reusable icon paths
+const icons = {
+  eye: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z',
+  user: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
+  film: 'M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2h3a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1h3z'
+};
+
 // Add Tailwind line-clamp styles
 const styles = `
   .line-clamp-2 {
@@ -17,110 +24,184 @@ const styles = `
 // News articles data
 const newsArticles = [
   {
-    id: 'donor-award',
-    title: 'DONOR Wins Best Editing Award',
-    date: 'January 15, 2025',
+    id: 'donor-oneness-cinematography',
+    title: 'Donor receives Best Cinematography at ONENESS FILM FESTIVAL 2025',
+    date: 'January 2, 2026',
     image: '/donor-selection.png',
-    excerpt: 'Our latest film DONOR has been recognized for outstanding editing at the Independent Film Festival...',
+    relatedFilm: 'Donor',
+    excerpt: 'The Oneness festival representatives praised the film\'s "striking visual language and emotional restraint"...',
     content: `
-      <p>We are thrilled to announce that our short film DONOR has won the Best Editing Award at the Independent Film Festival. This recognition highlights the exceptional work of our editing team and the collaborative effort that went into creating this powerful story.</p>
+      <p>Donor receives the award for Best Cinematography at ONENESS FILM FESTIVAL 2025.</p>
       
-      <p>DONOR, which explores themes of grief, loss, and human connection, required careful pacing and emotional timing to deliver its impactful message. The editing process was crucial in weaving together the narrative threads that make this film so compelling.</p>
+      <p>The Oneness festival representatives had this to say about the film on their instagram:</p>
       
-      <p>This award is a testament to the dedication and talent of everyone involved in the production. We look forward to sharing more updates as DONOR continues its festival run.</p>
+      <blockquote class="border-l-4 border-yellow-500 pl-4 italic mb-6">
+        "Congratulations to director Wesley Boone and the entire team behind this deeply moving film. Through striking visual language and emotional restraint, Donor follows a grieving mother as her world shifts upon meeting the recipient of her stillborn daughter's heart.
+        <br><br>
+        A powerful example of how cinematography can carry grief, memory, and connection beyond words. Bravo to all involved."
+      </blockquote>
     `,
     relatedLinks: [
+      {
+        title: 'Watch the Trailer Now',
+        description: 'Experience the acclaimed film',
+        url: '/film?film=Donor',
+        icon: icons.eye
+      }
+    ]
+  },
+  {
+    id: 'donor-festival-wins',
+    title: 'What a month it\'s been for Donor!',
+    date: 'November 19, 2025',
+    image: '/donor-selection.png',
+    relatedFilm: 'Donor',
+    excerpt: 'We took home "Best Louisiana Film" at Screamfest - NOLA and "Best Drama Short" at REEL East Texas Film Festival...',
+    content: `
+      <p>What a month it's been for Donor!</p>
+      
+      <p>We took home "Best Louisiana Film" at Screamfest - NOLA, (a wonderful event at the Broad Theater) and followed it up with "Best Drama Short" at REEL East Texas Film Festival, where we met other passionate filmmakers in East Texas!</p>
+      
+      <p>It's incredibly special to connect with audiences in our home and sister states!</p>
+    `,
+    relatedLinks: [
+      {
+        title: 'Watch the Trailer Now',
+        description: 'Experience the acclaimed film',
+        url: '/film?film=Donor',
+        icon: icons.eye
+      },
+      {
+        title: 'All Events',
+        description: 'See past screenings',
+        url: '/events',
+        icon: icons.film
+      }
+    ]
+  },
+  {
+    id: 'tampa-bay-nominations',
+    title: 'Multiple Nominations at Tampa Bay Underground Film Festival',
+    date: 'January 17, 2025',
+    image: '/donor-selection.png',
+    relatedFilm: 'Donor',
+    excerpt: 'Our Florida Premiere is this weekend with nominations for Best Short Film, Best Screenplay, Best Cinematography, and Best Crime/Thriller Film...',
+    content: `
+      <p>Our Florida Premiere is this weekend and we've been nominated for several awards at the 2025 Tampa Bay Underground Film Festival!</p>
+      
+      <p>Our nominations are:</p>
+      <ul class="list-disc ml-6 mb-6">
+        <li>Best Short Film</li>
+        <li>Best Short Screenplay</li>
+        <li>Best Cinematography</li>
+        <li>Best Crime/Thriller Film</li>
+      </ul>
+      
+      <p>Join us this Friday at 1:30 PM at Citrus Park Theater to experience our film and many other great indie shorts and features!</p>
+      
+      <p>This marks an exciting milestone for NoHomework Productions as we continue to share our stories with audiences across the country. The Tampa Bay Underground Film Festival celebrates independent filmmaking and provides a platform for emerging voices in cinema.</p>
+      
+      <p>We're honored to be recognized alongside so many talented filmmakers and look forward to connecting with the Tampa Bay film community.</p>
+    `,
+    relatedLinks: [
+      {
+        title: 'Watch the Trailer Now',
+        description: 'Experience the acclaimed film',
+        url: '/film?film=Donor',
+        icon: icons.eye
+      },
+      {
+        title: 'All Events',
+        description: 'See upcoming screenings',
+        url: '/events',
+        icon: icons.film
+      }
+    ]
+  },
+  {
+    id: 'donor-viewfinder-podcast',
+    title: '"Donor" featured on The Viewfinder Podcast with Chris Hadley',
+    date: 'December 5, 2025',
+    image: '/scene-photos/donor/card.png',
+    relatedFilm: 'Donor',
+    excerpt: 'After a successful screening at the inaugural Baton Rouge Underground Film Festival, members of the "Donor" team were interviewed by Chris Hadley...',
+    content: `
 
+      
+      <p>After a successful screening at the inaugural Baton Rouge Underground Film Festival in August, members of the "Donor" team were interviewed by Chris Hadley for The Viewfinder Podcast.</p>
+      
+      <p>Writer/Director Wesley Boone, Gordy Cassel (Beth) and Lucy Faust (Julia) joined Chris to discuss the production of the film and its origins.</p>
+      
+      <p>Listen to The Viewfinder Podcast wherever you get your podcasts now!</p>
+      <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:660px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/episode-122-donor-writer-director-co-star-wesley-boone/id1465499690?i=1000732322575"></iframe>
+    `,
+    relatedLinks: [
       {
-        title: 'About Wesley Boone',
-        description: 'Meet the director',
-        url: '/about',
-        icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
-      },
-      {
-        title: 'All Films',
-        description: 'Explore our filmography',
-        url: '/films',
-        icon: 'M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2h3a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1h3z'
+        title: 'Watch the Trailer Now',
+        description: 'Experience the acclaimed film',
+        url: '/film?film=Donor',
+        icon: icons.eye
       }
     ]
   },
   {
-    id: 'new-project',
-    title: 'New Project in Development',
-    date: 'January 10, 2025',
-    image: '/Old-Hollywood.jpg',
-    excerpt: 'We\'re excited to announce our upcoming thriller project set to begin production this spring...',
+    id: 'after-festival-selection',
+    title: '"After" selected for Cinema on the Bayou Film Festival 2026',
+    date: 'January 1, 2026',
+    image: '/scene-photos/after/article2.png',
+    relatedFilm: 'After',
+    excerpt: 'No Homework Productions latest project, "After", will start its festival journey close to home...',
     content: `
-      <p>NoHomework Productions is excited to announce our latest project currently in development. This new thriller will push the boundaries of storytelling and showcase our commitment to creating compelling, character-driven narratives.</p>
+      <p>No Homework Productions latest project, "After", will start its festival journey close to home. The sci-fi/drama will have its world premiere at Cinema on the Bayou Film Festival 2026, one of the state of Louisiana's longest running film festivals, hosted each winter in Lafayette.</p>
       
-      <p>Pre-production is underway with casting and location scouting in progress. The project represents an evolution in our filmmaking approach, incorporating new techniques and technologies while maintaining our focus on authentic human stories.</p>
+      <p>"We're so excited to participate in Cinema on the Bayou in 2026," said director/producer Wesley Boone. "This is the first time we've screened any of our projects in Lafayette and we are very excited to be a part of such an incredible line-up of films."</p>
       
-      <p>More details will be revealed in the coming months as we move closer to principal photography. Stay tuned for casting announcements and behind-the-scenes content.</p>
+      <p>"After" follows a married couple forced to confront the time they have left together when one of them is diagnosed with a terminal illness. A new procedure offers a chance at infinite time, but at what cost?</p>
+      
+      <p>The project stars Casey Groves (Apple TV's Blackbird, Rob Reiner's LBJ) and newcomer Tara Tingle. Production took place in Shreveport/Bossier during the summer of 2026, with post-production wrapping up in September.</p>
+      
+      <p>"After" is the first collaboration for No Homework Productions and writer/producer Andrew Scherer.</p>
     `,
     relatedLinks: [
       {
-        title: 'Current Projects',
-        description: 'See what we\'re working on',
-        url: '/films',
-        icon: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10'
-      },
-      {
-        title: 'About Our Team',
-        description: 'Meet the filmmakers',
-        url: '/about',
-        icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'
+        title: 'Learn About AFTER',
+        description: 'Explore the sci-fi drama',
+        url: '/film?film=After',
+        icon: icons.eye
       }
     ]
   },
   {
-    id: 'collect-call-bts',
-    title: 'Behind the Scenes: Collect Call',
-    date: 'January 5, 2025',
-    image: '/some.png',
-    excerpt: 'Take a look behind the scenes of our 2023 production Collect Call and the creative process...',
+    id: 'dead-air-full-circle',
+    title: 'From box office pals to production partners, "Dead Air" is a full circle moment for writer/director Trevor L. Poole',
+    date: 'December 20, 2025',
+    image: '/scene-photos/dead-air/card.jpeg',
+    relatedFilm: 'Dead Air',
+    excerpt: 'A dream that was born over a decade ago in a musty box-office came to life in Fall 2024...',
     content: `
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p>A dream that was born over a decade ago in a musty box-office came to life in Fall 2024, when writer/director Trevor L. Poole's latest short film "Dead Air" started principal photography with a group of familiar faces.</p>
       
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
-        <img src="/scene-photos/collect-call/bts1.jpeg" alt="Director Wesley Boone on set" class="rounded-lg shadow-lg w-full" />
-        <img src="/scene-photos/collect-call/bts2.jpeg" alt="Lighting setup for key scene" class="rounded-lg shadow-lg w-full" />
-      </div>
+      <p>"Multiple cast and crew on this I met more than 10 years ago, working in the box office of a movie theater," said Poole. "My producers (Paige Ferrant and Wesley Boone) and my supporting player (Matt Margheim). All of us bonded over movies, and now we make them."</p>
       
-      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>No Homework Productions has been a collaborative, creative environment for even more members of that box office team. Along with Paige, Trevor, Wesley and Matt, NHP Founding Member Caleb Jobe was also a part of that very same box office crew. "Dead Air" was able to reunite (most) of this crew in Shreveport/Bossier despite members being as far as Milwaukee and Nashville.</p>
       
-      <div class="my-8">
-        <img src="/scene-photos/collect-call/bts3.jpeg" alt="Cast and crew during filming" class="rounded-lg shadow-lg w-full max-w-3xl mx-auto" />
-      </div>
+      <p>"This was my first time acting but I think it was made so much easier just doing this with people I'm comfortable with," said Matt Margheim, who plays Brendan in the film. Matt's chemistry with Wesley was something that also helped land him the part.</p>
       
-      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+      <p>"I immediately thought about Matt," said Wesley. "We've always had a special dynamic and I just felt that he'd be a great fit for the part. Trevor was open to it and once we did a screen test, it was pretty clear it would be a good fit. It was also a great excuse to hang out."</p>
       
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
-        <img src="/scene-photos/collect-call/bts4.jpeg" alt="Equipment setup" class="rounded-lg shadow-lg w-full" />
-        <img src="/scene-photos/collect-call/bts5.jpeg" alt="Behind the camera" class="rounded-lg shadow-lg w-full" />
-      </div>
+      <p>"Dead Air" follows a distressed wanna-be stand-up comedian who has the unenviable task of giving the eulogy at his best-friend's funeral. Poole says the initial concept came from his own anxieties. "When I originally conceived 'Dead Air' I felt I was floundering in my career. Just as Joey contemplates if he's made for comedy, I wondered if I was cut out for directing," said Poole. "My first short film had not quite succeeded in any particular fashion and I was feeling listless, not really moving forward in my career at all. All of these same feelings were funneled into Joey."</p>
       
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-8">
-        <img src="/scene-photos/collect-call/bts6.jpeg" alt="Final shot setup" class="rounded-lg shadow-lg w-full" />
-        <img src="/scene-photos/collect-call/bts7.jpeg" alt="Cast preparation" class="rounded-lg shadow-lg w-full" />
-        <img src="/scene-photos/collect-call/bts8.jpeg" alt="Wrap celebration" class="rounded-lg shadow-lg w-full" />
-      </div>
+      <p>Wesley, so completely brought Joey to life with dedication and vulnerability. Wesley - like Joey - had lost his best friend and deeply connected with this aspect of the story, and when it came time to step on that stage in the chapel, he bled for the camera over and over just as I tried to on the page.</p>
     `,
     relatedLinks: [
       {
-        title: 'Watch Now',
-        description: 'Experience the horror short',
-        url: '/film?film=Collect Call',
-        icon: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
-      },
-      {
-        title: 'Behind the Scenes',
-        description: 'More production insights',
-        url: '/films',
-        icon: 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'
+        title: 'About Dead Air',
+        description: 'Learn more about the dramedy',
+        url: '/film?film=Dead Air',
+        icon: icons.eye
       }
     ]
-  }
+  },
 ];
 
 function NewsPageContent() {
@@ -142,7 +223,7 @@ function NewsPageContent() {
   if (article) {
     // Individual article view
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 pt-16 md:pt-20">
         {/* Hero Section */}
         <div className="relative h-96 overflow-hidden">
           <img 
@@ -237,7 +318,7 @@ function NewsPageContent() {
 
   // News listing view
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-16 md:pt-20">
       {/* Header Section */}
       <div className="bg-white pt-24 pb-16">
         <div className="max-w-6xl mx-auto px-6 text-center">

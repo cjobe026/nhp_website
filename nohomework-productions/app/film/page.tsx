@@ -6,6 +6,42 @@ import Link from 'next/link';
 
 import { films } from '../constants';
 
+// Import news articles to find related ones
+const newsArticles = [
+  {
+    id: 'tampa-bay-nominations',
+    title: 'Multiple Nominations at Tampa Bay Underground Film Festival',
+    date: 'January 17, 2025',
+    image: '/donor-selection.png',
+    relatedFilm: 'Donor',
+    excerpt: 'Our Florida Premiere is this weekend with nominations for Best Short Film, Best Screenplay, Best Cinematography, and Best Crime/Thriller Film...'
+  },
+  {
+    id: 'donor-viewfinder-podcast',
+    title: '"Donor" featured on The Viewfinder Podcast with Chris Hadley',
+    date: 'April 5, 2024',
+    image: '/scene-photos/donor/card.png',
+    relatedFilm: 'Donor',
+    excerpt: 'After a successful screening at the inaugural Baton Rouge Underground Film Festival, members of the "Donor" team were interviewed by Chris Hadley...'
+  },
+  {
+    id: 'after-festival-selection',
+    title: '"After" selected for first film festival, will screen at Cinema on the Bayou Film Festival 2026',
+    date: 'January 25, 2025',
+    image: '/scene-photos/after/card.png',
+    relatedFilm: 'After',
+    excerpt: 'No Homework Productions latest project, "After", will start its festival journey close to home...'
+  },
+  {
+    id: 'dead-air-full-circle',
+    title: 'From box office pals to production partners, "Dead Air" is a full circle moment for writer/director Trevor L. Poole',
+    date: 'December 20, 2024',
+    image: '/scene-photos/dead-air/card.jpeg',
+    relatedFilm: 'Dead Air',
+    excerpt: 'A dream that was born over a decade ago in a musty box-office came to life in Fall 2024...'
+  },
+];
+
 type Film = {
   name: string;
   Year: string;
@@ -33,6 +69,15 @@ function FilmPageContent() {
   const [filmData, setFilmData] = useState<Film | null>(null);
   const [showPosterGallery, setShowPosterGallery] = useState(false);
   const [currentPosterIndex, setCurrentPosterIndex] = useState(0);
+  const [showDirectorsStatement, setShowDirectorsStatement] = useState(false);
+
+  // Helper functions to extract key crew members
+  const getDirector = () => filmData?.Crew?.find(member => member.role.toLowerCase().includes('director'));
+  const getWriter = () => filmData?.Crew?.find(member => member.role.toLowerCase().includes('writer'));
+  const getTopCast = () => filmData?.Cast?.slice(0, 3) || [];
+  
+  // Group crew by department (unused function removed)
+  // const groupCrewByDepartment = () => { ... };
 
   useEffect(() => {
     if (filmName) {
@@ -100,7 +145,7 @@ function FilmPageContent() {
           <div className="lg:col-span-1">
             <Link href={`/gallery?film=${encodeURIComponent(filmData.name)}`} className="group block relative">
               <img 
-                src={(filmData as any).posterPath || filmData.Image_src}
+                src={(filmData as Film & { posterPath?: string }).posterPath || filmData.Image_src}
                 alt={`${filmData.name} Poster`}
                 className="w-full h-[500px] object-fill rounded-lg shadow-xl group-hover:opacity-80 transition-opacity cursor-pointer"
               />
@@ -113,74 +158,103 @@ function FilmPageContent() {
           </div>
         </div>
           
-          {/* Info below media */}
-          <div className="max-w-4xl mx-auto space-y-6">
-            {filmData.Synopsis && (
-              <div>
-                <h3 className="text-lg font-semibold mb-2">Storyline</h3>
-                <p className="text-gray-700 leading-relaxed">{filmData.Synopsis}</p>
-              </div>
-            )}
-            
-            {filmData.Genres && (
-              <div>
-                <h3 className="text-lg font-semibold mb-2">Genres</h3>
-                <div className="flex flex-wrap gap-2">
-                  {filmData.Genres.map((genre, index) => (
-                    <span key={index} className="bg-gray-200 px-3 py-1 rounded-full text-sm">{genre}</span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        
-        {/* Film Details */}
-        <div className="space-y-6 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-            {filmData.ReleaseDate && (
-              <div><strong>Release Date:</strong> {filmData.ReleaseDate}</div>
-            )}
-            {filmData.Country && (
-              <div><strong>Country:</strong> {filmData.Country}</div>
-            )}
-            {filmData.Language && (
-              <div><strong>Language:</strong> {filmData.Language}</div>
-            )}
-          </div>
-        </div>
-        
-        {/* Cast & Crew Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Cast */}
-          {filmData.Cast && filmData.Cast.length > 0 && (
+        {/* Film Details & Key Personnel */}
+        <div className="max-w-4xl mx-auto space-y-8 mb-12">
+          {/* Synopsis */}
+          {filmData.Synopsis && (
             <div>
-              <h3 className="text-2xl font-semibold mb-4">Top Cast</h3>
-              <div className="space-y-3">
-                {filmData.Cast.map((actor, index) => (
-                  <div key={index} className="flex justify-between items-center py-2 border-b border-gray-200">
-                    <span className="font-medium">{actor.name}</span>
-                    <span className="text-gray-600">{actor.character}</span>
-                  </div>
+              <h3 className="text-2xl font-semibold mb-3">Synopsis</h3>
+              <p className="text-gray-700 leading-relaxed text-lg">{filmData.Synopsis}</p>
+            </div>
+          )}
+          
+          {/* Genres */}
+          {filmData.Genres && (
+            <div>
+              <h4 className="text-lg font-semibold text-gray-900 mb-3">Genres</h4>
+              <div className="flex flex-wrap gap-2">
+                {filmData.Genres.map((genre, index) => (
+                  <span key={index} className="bg-blue-100 text-blue-800 px-3 py-1 rounded text-sm">{genre}</span>
                 ))}
               </div>
             </div>
           )}
           
-          {/* Crew */}
-          {filmData.Crew && filmData.Crew.length > 0 && (
-            <div>
-              <h3 className="text-2xl font-semibold mb-4">Crew</h3>
-              <div className="space-y-3">
-                {filmData.Crew.map((member, index) => (
-                  <div key={index} className="flex justify-between items-center py-2 border-b border-gray-200">
-                    <span className="font-medium">{member.name}</span>
-                    <span className="text-gray-600">{member.role}</span>
-                  </div>
-                ))}
+          {/* Key Personnel */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {getDirector() && (
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-2">Director</h4>
+                <p className="text-gray-700">{getDirector()?.name}</p>
               </div>
-            </div>
-          )}
+            )}
+            {getWriter() && (
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-2">Writer</h4>
+                <p className="text-gray-700">{getWriter()?.name}</p>
+              </div>
+            )}
+            {getTopCast().length > 0 && (
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-2">Top Cast</h4>
+                <div className="space-y-1">
+                  {getTopCast().map((actor, index) => (
+                    <p key={index} className="text-gray-700 text-sm">
+                      {actor.name} {actor.character && `as ${actor.character}`}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
+        
+        {/* Director's Statement */}
+        {(filmData as Film & { directorsStatement?: string }).directorsStatement && (
+          <div className="max-w-4xl mx-auto mb-8">
+            <div className="flex justify-center mb-6">
+              <button
+                onClick={() => setShowDirectorsStatement(!showDirectorsStatement)}
+                className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+              >
+                {showDirectorsStatement ? 'Hide Director\'s Statement' : 'Read Director\'s Statement'}
+              </button>
+            </div>
+            
+            {showDirectorsStatement && (
+              <div className="bg-gray-50 rounded-lg p-8">
+                <div className="text-center mb-6">
+                  <h3 className="text-2xl font-semibold mb-2">Director's Statement</h3>
+                  {getDirector() && (
+                    <p className="text-gray-600 text-lg">{getDirector()?.name}</p>
+                  )}
+                </div>
+                <div className="prose prose-lg max-w-none">
+                  {(filmData as Film & { directorsStatement?: string }).directorsStatement?.split('\n\n').map((paragraph: string, index: number) => (
+                    <p key={index} className="text-gray-700 leading-relaxed mb-4">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+        
+        {/* Cast & Crew Link */}
+        {((filmData.Cast && filmData.Cast.length > 0) || (filmData.Crew && filmData.Crew.length > 0)) && (
+          <div className="max-w-4xl mx-auto mb-8 text-center">
+            <Link 
+              href={`/cast-crew?film=${encodeURIComponent(filmData.name)}`}
+              className="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+            >
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              View Full Cast & Crew
+            </Link>
+          </div>
+        )}
         
         {/* Awards */}
         {filmData.Awards && filmData.Awards.length > 0 && (
@@ -195,31 +269,37 @@ function FilmPageContent() {
         )}
         
         {/* Related Articles */}
-        {filmData.relatedArticles && filmData.relatedArticles.length > 0 && (
-          <div className="mt-12">
-            <h3 className="text-2xl font-semibold mb-6">Related Articles</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {filmData.relatedArticles.map((article, index) => (
-                <Link key={index} href={`/news?article=${article.id}`} className="group">
-                  <div className="bg-gray-50 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                    <img 
-                      src={article.image} 
-                      alt={article.title}
-                      className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="p-4">
-                      <h4 className="font-semibold text-lg mb-2 group-hover:text-blue-600 transition-colors">
-                        {article.title}
-                      </h4>
-                      <p className="text-gray-500 text-sm mb-2">{article.date}</p>
-                      <p className="text-gray-700 text-sm">{article.excerpt}</p>
+        {(() => {
+          const relatedArticles = newsArticles.filter(article => 
+            article.relatedFilm === filmData.name && 
+            !article.id.includes('directors-statement')
+          );
+          return relatedArticles.length > 0 && (
+            <div className="mt-12">
+              <h3 className="text-2xl font-semibold mb-6">Related Articles</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {relatedArticles.map((article, index) => (
+                  <Link key={index} href={`/news?article=${article.id}`} className="group">
+                    <div className="bg-gray-50 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                      <img 
+                        src={article.image} 
+                        alt={article.title}
+                        className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="p-4">
+                        <h4 className="font-semibold text-lg mb-2 group-hover:text-blue-600 transition-colors">
+                          {article.title}
+                        </h4>
+                        <p className="text-gray-500 text-sm mb-2">{article.date}</p>
+                        <p className="text-gray-700 text-sm">{article.excerpt}</p>
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          );
+        })()}
         
         {/* Poster Gallery Modal */}
         {showPosterGallery && filmData && (

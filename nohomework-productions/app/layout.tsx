@@ -78,6 +78,13 @@ export default function ClientLayout({
                   Films
                 </Link>
                 <Link 
+                  href="/events" 
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block text-white text-2xl font-light hover:text-yellow-400 transition-colors border-b border-white/10 pb-4"
+                >
+                  Events
+                </Link>
+                <Link 
                   href="/about" 
                   onClick={() => setIsMenuOpen(false)}
                   className="block text-white text-2xl font-light hover:text-yellow-400 transition-colors border-b border-white/10 pb-4"

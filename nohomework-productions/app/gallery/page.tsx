@@ -106,7 +106,7 @@ function GalleryContent() {
         {/* Image Grid */}
         <div className={`gap-6 ${
           filter === 'Poster' 
-            ? 'flex flex-wrap justify-center' 
+            ? 'flex flex-wrap justify-center items-start' 
             : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
         }`}>
           {filmData.images.filter(image => image.type === filter).map((image, filteredIndex) => {
@@ -115,7 +115,7 @@ function GalleryContent() {
               return (
                 <div 
                   key={filteredIndex}
-                  className="group cursor-pointer transition-all duration-300 max-w-sm"
+                  className="group cursor-pointer transition-all duration-300 w-full max-w-sm mx-2 mb-6"
                   onClick={() => {
                     const filteredImages = filmData.images.filter(img => img.type === filter);
                     setCurrentImageIndex(filteredIndex);

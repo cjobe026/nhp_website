@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ClientLayout from './client-layout';
+import ClientLayout from './layout';
 
 export const metadata: Metadata = {
   title: "NoHomework Productions",
