@@ -3,7 +3,7 @@ export const films =
     
         {
       name: 'Collect Call',
-      Year: '2023',
+      Year: '2024',
       Starring: 'Garrett Ahrens, Edwina Thompson, Jonathan Sullivan',
       Image_src: "/scene-photos/collect-call/card.png",
       posterPath: "/scene-photos/collect-call/poster2.png",
@@ -47,7 +47,7 @@ export const films =
     },
     {
       name: 'Donor',
-      Year: '2024',
+      Year: '2025',
       Starring: 'Gordy Cassel, Lucy Faust, Wesley Boone, Garrett Ahrens, Kris Holmes, Carson Boone',
       Image_src: "/scene-photos/donor/card.png",
       posterPath: "/scene-photos/donor/poster1.jpg",
@@ -126,7 +126,7 @@ This was the most challenging and rewarding creative experience of my life and I
     },
     {
       name: 'After',
-      Year: '2025',
+      Year: '2026',
       Starring: 'Tara Tingle, Casey Groves, Bill Smith, Wesley Boone',
       Image_src: "/scene-photos/after/card.png",
       posterPath: "/scene-photos/after/poster1.jpg",
@@ -197,7 +197,8 @@ We shot this over two days with an incredible crew in the heat of the summer. I 
         Status: "In Development",
         TimelinePosition: 4,
         InFestivals: false,
-      Genres: ["Feature", "Dramedy", "Thriller"]
+        Genres: ["Feature", "Dramedy", "Thriller"],
+        hidden: true
       },
     {
       name: 'Dead Air',
@@ -209,7 +210,7 @@ We shot this over two days with an incredible crew in the heat of the summer. I 
       YouTubeLink: "",
       Description: "Short Dramedy",
       Synopsis: "At the funeral of his best friend, a struggling stand-up is confronted with giving a eulogy. Even worse, he has to confront the possibility of not being funny.",
-      Status: "In Post Production",
+      Status: "Coming Soon",
       TimelinePosition: 5,
       InFestivals: false,
       ReleaseDate: "TBD",

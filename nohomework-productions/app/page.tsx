@@ -22,8 +22,8 @@ export default function Home() {
     },
     {
       image: '/scene-photos/dead-air/article1.jpg',
-      title: 'From box office pals to production partners', 
-      subtitle: '"Dead Air" brings together a decade-old friendship',
+      title: '"Dead Air" is a full circle moment for writer/director Trevor L. Poole', 
+      subtitle: 'New Short film brings together old friends',
       link: '/news?article=dead-air-full-circle',
       type: 'article',
       year: '2025'
@@ -124,10 +124,10 @@ export default function Home() {
                     }
                   }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
                   
-                  <div className="absolute bottom-4 lg:bottom-8 left-4 lg:left-8 text-white">
-                    <h2 className="text-xl lg:text-4xl font-bold mb-1 lg:mb-2">{slide.title}</h2>
+                  <div className="absolute bottom-4 lg:bottom-8 left-4 lg:left-8 text-white pointer-events-none">
+                    <h2 className="text-lg lg:text-4xl font-bold mb-1 lg:mb-2">{slide.title}</h2>
                     <p className="text-sm lg:text-lg text-gray-300 mb-1 lg:mb-2">{slide.subtitle}</p>
                     <span className="text-xs lg:text-sm text-gray-400">{slide.year} • Article</span>
                   </div>
@@ -270,54 +270,47 @@ export default function Home() {
         </div>
       </main>
       
-      <section className="bg-white py-12 px-4 relative z-20">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-16 text-black font-thin tracking-wide">LATEST NEWS</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Link href="/news?article=tampa-bay-nominations" className="group h-full">
-              <article className="bg-gray-100 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow h-full flex flex-col">
-                <img 
-                  src="/donor-selection.png" 
-                  alt="Tampa Bay Underground Film Festival" 
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300 flex-shrink-0"
-                />
-                <div className="p-4 flex-1 flex flex-col">
-                  <h3 className="font-bold text-lg mb-2 group-hover:text-blue-600 transition-colors">Multiple Nominations at Tampa Bay Underground Film Festival</h3>
-                  <p className="text-gray-600 text-sm mb-2">January 17, 2025</p>
-                  <p className="text-gray-800 flex-1">Our Florida Premiere is this weekend with nominations for Best Short Film, Best Screenplay, Best Cinematography, and Best Crime/Thriller Film...</p>
-                </div>
-              </article>
-            </Link>
-            
-            <Link href="/news?article=donor-oneness-cinematography" className="group h-full">
-              <article className="bg-gray-100 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow h-full flex flex-col">
-                <img 
-                  src="/donor-selection.png" 
-                  alt="Donor ONENESS Film Festival" 
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300 flex-shrink-0"
-                />
-                <div className="p-4 flex-1 flex flex-col">
-                  <h3 className="font-bold text-lg mb-2 group-hover:text-blue-600 transition-colors">Donor receives Best Cinematography at ONENESS FILM FESTIVAL 2025</h3>
-                  <p className="text-gray-600 text-sm mb-2">January 2, 2026</p>
-                  <p className="text-gray-800 flex-1">The Oneness festival representatives praised the film's "striking visual language and emotional restraint"...</p>
-                </div>
-              </article>
-            </Link>
-            
-            <Link href="/news?article=donor-festival-wins" className="group h-full">
-              <article className="bg-gray-100 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow h-full flex flex-col">
-                <img 
-                  src="/donor-selection.png" 
-                  alt="Donor Festival Wins" 
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300 flex-shrink-0"
-                />
-                <div className="p-4 flex-1 flex flex-col">
-                  <h3 className="font-bold text-lg mb-2 group-hover:text-blue-600 transition-colors">What a month it's been for Donor!</h3>
-                  <p className="text-gray-600 text-sm mb-2">November 19, 2025</p>
-                  <p className="text-gray-800 flex-1">We took home "Best Louisiana Film" at Screamfest - NOLA and "Best Drama Short" at REEL East Texas Film Festival...</p>
-                </div>
-              </article>
-            </Link>
+      <section className="bg-white py-20 px-4 relative z-20">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-16 text-black font-thin tracking-wide">RELEASES</h2>
+          
+          <div className="relative pt-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pb-6">
+              {films.filter(film => film.TimelinePosition && !film.hidden).sort((a, b) => b.TimelinePosition - a.TimelinePosition).slice(0, 4).map((film, index) => {
+                const posterPath = (film as typeof films[0] & { posterPath?: string }).posterPath || `/scene-photos/${film.name.toLowerCase().replace(' ', '-')}/poster1.jpg`;
+                
+                return (
+                  <div key={index} className="relative pt-6 pb-6 max-w-56 mx-auto">
+                    <div className="text-center mb-4">
+                      <span className="text-2xl font-bold text-gray-800">{film.Year}</span>
+                    </div>
+                    
+                    <Link href={`/film?film=${encodeURIComponent(film.name)}`} className="group block">
+                      <div className="bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden hover:shadow-2xl transition-shadow">
+                        <div className="aspect-[3/4] overflow-hidden">
+                          <img 
+                            src={posterPath} 
+                            alt={film.name} 
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                        
+                        <div className="p-4 text-center">
+                          <div className="px-3 py-1 rounded-full text-xs font-medium inline-block" style={{
+                            backgroundColor: film.Status === 'Now Showing' ? '#d97706' :
+                                           film.Status === 'Released' ? '#10b981' :
+                                           '#3b82f6',
+                            color: '#ffffff'
+                          }}>
+                            {film.Status}
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
@@ -362,7 +355,7 @@ export default function Home() {
                   <div className="flex items-start justify-between mb-4 flex-1">
                     <div className="flex-1">
                       <h3 className="text-white text-xl font-bold mb-2">NHP Presents</h3>
-                      <p className="text-gray-300 text-sm mb-1">Donor, After, Collect Call & Dead Air</p>
+                      <p className="text-gray-300 text-sm mb-1">Donor, After & Dead Air</p>
                       <p className="text-gray-300 text-sm mb-1">Robinson Film Center</p>
                       <p className="text-gray-400 text-sm">Shreveport, Louisiana</p>
                     </div>
@@ -389,53 +382,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-white py-20 px-4 relative z-20">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-16 text-black font-thin tracking-wide">PROJECT TIMELINE</h2>
-          
-          <div className="relative pt-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pb-6">
-              {films.filter(film => film.TimelinePosition).sort((a, b) => b.TimelinePosition - a.TimelinePosition).slice(0, 4).map((film, index) => {
-                const posterPath = (film as typeof films[0] & { posterPath?: string }).posterPath || `/scene-photos/${film.name.toLowerCase().replace(' ', '-')}/poster1.jpg`;
-                
-                return (
-                  <div key={index} className="relative pt-6 pb-6 max-w-56 mx-auto">
-                    <div className="text-center mb-4">
-                      <span className="text-2xl font-bold text-gray-800">{film.Year}</span>
-                    </div>
-                    
-                    <Link href={`/film?film=${encodeURIComponent(film.name)}`} className="group block">
-                      <div className="bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden hover:shadow-2xl transition-shadow">
-                        <div className="aspect-[3/4] overflow-hidden">
-                          <img 
-                            src={posterPath} 
-                            alt={film.name} 
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
-                        </div>
-                        
-                        <div className="p-4 text-center">
-                          <div className="px-3 py-1 rounded-full text-xs font-medium inline-block" style={{
-                            backgroundColor: film.Status === 'Now Showing' ? '#d97706' :
-                                           film.Status === 'Released' ? '#10b981' :
-                                           '#3b82f6',
-                            color: '#ffffff'
-                          }}>
-                            {film.Status}
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       <footer className="text-white p-4 mt-6 text-center bg-black">
-        <p>&copy; 2025 NoHomework Productions. All rights reserved.</p>
+        <p>&copy; 2025 No Homework Productions. All rights reserved.</p>
       </footer>
     </div>
   );

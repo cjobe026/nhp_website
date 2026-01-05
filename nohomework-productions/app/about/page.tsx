@@ -26,7 +26,7 @@ export default function About() {
         <section className="w-full max-w-4xl mx-auto text-center py-12 px-6">
           <h2 className="text-4xl font-bold mb-6">About NHP</h2>
           <p className="text-xl leading-relaxed text-gray-700">
-            NoHomework Productions is a Louisiana-based film production studio founded by Wesley Boone, Justus Boone, Caleb Jobe, and Ian Jobe. What began as kids making films in the backyard has grown into a creative outlet dedicated to storytelling and craft. Built on collaboration with artists both local and beyond, we focus on making films that genuinely connect with audiences—while making sure the people behind the camera enjoy the process just as much as the final product.
+            No Homework Productions is a Louisiana-based film production studio founded by Wesley Boone, Justus Boone, Caleb Jobe, and Ian Jobe. What began as kids making films in the backyard has grown into a creative outlet dedicated to impactful storytelling and meaningful collaboration. NHP is focused on cultivating a community of local creators that share a passion for independent film making while focusing on making films that genuinely connect with audiences.
           </p>
         </section>
   

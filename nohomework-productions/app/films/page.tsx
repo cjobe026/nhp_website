@@ -33,7 +33,7 @@ export default function About() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
   
-          {films.sort((a, b) => parseInt(b.Year) - parseInt(a.Year)).map((film, index) => {
+          {films.filter(film => !film.hidden).sort((a, b) => parseInt(b.Year) - parseInt(a.Year)).map((film, index) => {
             const posterPath = (film as Film & { posterPath?: string }).posterPath || `/scene-photos/${film.name.toLowerCase().replace(' ', '-')}/poster1.jpg`;
             
             return (

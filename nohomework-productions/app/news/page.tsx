@@ -99,7 +99,7 @@ const newsArticles = [
       
       <p>Join us this Friday at 1:30 PM at Citrus Park Theater to experience our film and many other great indie shorts and features!</p>
       
-      <p>This marks an exciting milestone for NoHomework Productions as we continue to share our stories with audiences across the country. The Tampa Bay Underground Film Festival celebrates independent filmmaking and provides a platform for emerging voices in cinema.</p>
+      <p>This marks an exciting milestone for No Homework Productions as we continue to share our stories with audiences across the country. The Tampa Bay Underground Film Festival celebrates independent filmmaking and provides a platform for emerging voices in cinema.</p>
       
       <p>We're honored to be recognized alongside so many talented filmmakers and look forward to connecting with the Tampa Bay film community.</p>
     `,
@@ -223,7 +223,7 @@ function NewsPageContent() {
   if (article) {
     // Individual article view
     return (
-      <div className="min-h-screen bg-gray-50 pt-16 md:pt-20">
+      <div className="min-h-screen bg-gray-50 pt-12 md:pt-20">
         {/* Hero Section */}
         <div className="relative h-96 overflow-hidden">
           <img 
@@ -318,13 +318,13 @@ function NewsPageContent() {
 
   // News listing view
   return (
-    <div className="min-h-screen bg-gray-50 pt-16 md:pt-20">
+    <div className="min-h-screen bg-gray-50 pt-12 md:pt-20">
       {/* Header Section */}
       <div className="bg-white pt-24 pb-16">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h1 className="text-6xl font-bold mb-6 text-gray-900">Latest News</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Stay updated with the latest from NoHomework Productions
+            Stay updated with the latest from No Homework Productions
           </p>
         </div>
       </div>

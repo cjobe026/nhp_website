@@ -15,17 +15,16 @@ export const events = [
   },
   {
     id: 2,
-    title: 'NHP Presents: Quadruple Feature',
-    subtitle: 'Donor, After, Collect Call & Dead Air',
+    title: 'NHP Presents: Triple Feature',
+    subtitle: 'Donor, After & Dead Air',
     date: 'January 9, 2025',
     time: '6:00 PM',
     location: 'Shreveport, Louisiana',
     venue: 'Robinson Film Center',
-    description: 'A special evening showcasing four of our acclaimed films. Experience the complete NoHomework Productions journey in one night.',
-    link: 'https://robinsonfilmcenter.org/',
+    description: 'A private event showcasing three of our films. Experience the complete No Homework Productions journey in one night.',
     type: 'Special Screening',
     status: 'upcoming',
-    movieIds: ['Donor', 'After', 'Collect Call', 'Dead Air']
+    movieIds: ['Donor', 'After', 'Dead Air']
   },
   {
     id: 3,
