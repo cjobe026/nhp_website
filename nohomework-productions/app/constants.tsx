@@ -26,7 +26,7 @@ export const films =
       posterCount: 3,
       Cast: [
         { name: "Garrett Ahrens", character: "Oscar" },
-        { name: "Edwina Thompson", character: "Deirdre" },
+        { name: "Edwina Thompson", character: "Deidre" },
         { name: "Jonathan Sullivan", character: "Grant" }
       ],
       Crew: [
@@ -113,13 +113,13 @@ Every character in this movie represents me on my own journey with grief. Seeing
 I had such an incredible experience working with Gordy and Lucy in shaping these two lead characters. Both brought so much nuance to each of these women in ways I couldn't have anticipated. They treated this story with so much respect knowing what it was rooted in. Our crew was also exceptional and game for everything we threw at them over the course of our four-day shoot.
 
 This was the most challenging and rewarding creative experience of my life and I'm so excited for audiences to finally see the hard work our team poured into Donor!`,
-      posterCount: 2,
+      posterCount: 6,
       relatedArticles: [
         {
           id: 'donor-viewfinder-podcast',
           title: 'DONOR on the Viewfinder Podcast',
           date: 'October 17, 2025',
-          image: '/viewfinder-podcast.jpg',
+          image: '/article1_1.png',
           excerpt: 'Listen to the Viewfinder Podcast discussion about DONOR...'
         }
       ]
@@ -127,7 +127,7 @@ This was the most challenging and rewarding creative experience of my life and I
     {
       name: 'After',
       Year: '2026',
-      Starring: 'Tara Tingle, Casey Groves, Bill Smith, Wesley Boone',
+      Starring: 'Tara Tingle, Casey Groves, Wesley Boone',
       Image_src: "/scene-photos/after/card.png",
       posterPath: "/scene-photos/after/poster1.jpg",
       Awards: [
@@ -143,7 +143,7 @@ This was the most challenging and rewarding creative experience of my life and I
       Cast: [
         { name: "Tara Tingle", character: "Taylor" },
         { name: "Casey Groves", character: "Robert" },
-        { name: "Bill Smith", character: "" },
+        { name: "Bill Smith", character: "Doctor Williams" },
         { name: "Wesley Boone", character: "" }
       ],
       Crew: [
@@ -205,9 +205,9 @@ We shot this over two days with an incredible crew in the heat of the summer. I 
       Year: '2026',
       Starring: 'Wesley Boone, Ariel Roberson, Matthew Margheim, Camille Gladney, Sara Patterson',
       Image_src: "/scene-photos/dead-air/card.jpeg",
-      posterPath: "/scene-photos/dead-air/poster1.png",
+      posterPath: "/scene-photos/dead-air/poster1.jpg",
       Awards: [],
-      YouTubeLink: "",
+      YouTubeLink: "https://www.youtube.com/embed/8Q_fVa2PmwM?si=fMyywpqPqkro4UZx",
       Description: "Short Dramedy",
       Synopsis: "At the funeral of his best friend, a struggling stand-up is confronted with giving a eulogy. Even worse, he has to confront the possibility of not being funny.",
       Status: "Coming Soon",
@@ -219,10 +219,10 @@ We shot this over two days with an incredible crew in the heat of the summer. I 
       Genres: ["Dramedy", "Short", "Comedy"],
       Cast: [
         { name: "Wesley Boone", character: "Joey" },
-        { name: "Ariel Roberson", character: "" },
-        { name: "Matthew Margheim", character: "" },
-        { name: "Camille Gladney", character: "" },
-        { name: "Sara Patterson", character: "" }
+        { name: "Ariel Roberson", character: "Linda" },
+        { name: "Matthew Margheim", character: "Brendan" },
+        { name: "Camille Gladney", character: "Amy" },
+        { name: "Sara Patterson", character: "Leigh" }
       ],
       Crew: [
         { name: "Trevor L. Poole", role: "Writer/Director" },
@@ -244,7 +244,7 @@ We shot this over two days with an incredible crew in the heat of the summer. I 
         { name: "JaCayla Smith", role: "Assistant Camera" },
         { name: "Kadotani Fuka", role: "Poster Artist" }
       ],
-      posterCount: 1,
+      posterCount: 2,
       relatedArticles: [
         {
           id: 'dead-air-directors-statement',

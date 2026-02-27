@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { films } from './constants';
+import { events } from './events/events-data';
 import Link from 'next/link';
 
 export default function Home() {
@@ -9,30 +10,32 @@ export default function Home() {
   const [isPaused, setIsPaused] = useState(false);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
+  const [isSwiping, setIsSwiping] = useState(false);
   
   const carouselSlides = [
-
     {
-      image: '/scene-photos/after/article2.png', 
-      title: '"After" selected for Cinema on the Bayou Film Festival',
-      subtitle: 'World premiere at Louisiana\'s longest running film festival',
-      link: '/news?article=after-festival-selection',
+      image: '/scene-photos/after/article3.png',
+      mobileImage: '/scene-photos/after/article3_mobile.png', 
+      title: 'Prison City Film Festival highlights "After" and "Donor" in 2026 edition',
+      subtitle: 'Two NHP films selected for 2026 festival in Texas',
+      link: '/news/prison-city-festival',
       type: 'article',
       year: '2026'
     },
     {
-      image: '/scene-photos/dead-air/article1.jpg',
+      image: '/scene-photos/dead-air/article1_1.jpeg',
       title: '"Dead Air" is a full circle moment for writer/director Trevor L. Poole', 
-      subtitle: 'New Short film brings together old friends',
-      link: '/news?article=dead-air-full-circle',
+      subtitle: 'New short film brings together old friends',
+      link: '/news/dead-air-full-circle',
       type: 'article',
       year: '2025'
     },
         {
-      image: '/scene-photos/donor/card.png',
+      image: '/scene-photos/donor/article1_1.png',
+      mobileImage: '/scene-photos/donor/article1_1mobile.png',
       title: '"Donor" featured on The Viewfinder Podcast',
       subtitle: 'Listen to the cast and crew discuss the acclaimed film',
-      link: '/news?article=donor-viewfinder-podcast',
+      link: '/news/donor-viewfinder-podcast',
       type: 'article',
       year: '2025'
     }
@@ -65,14 +68,19 @@ export default function Home() {
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX);
+    setTouchEnd(e.targetTouches[0].clientX);
+    setIsSwiping(false);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     setTouchEnd(e.targetTouches[0].clientX);
+    if (Math.abs(touchStart - e.targetTouches[0].clientX) > 10) {
+      setIsSwiping(true);
+    }
   };
 
   const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
+    if (!touchStart) return;
     
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > 50;
@@ -84,9 +92,9 @@ export default function Home() {
       setCurrentSlide(prev => prev === 0 ? carouselSlides.length - 1 : prev - 1);
     }
     
-    // Reset touch values
     setTouchStart(0);
     setTouchEnd(0);
+    setTimeout(() => setIsSwiping(false), 100);
   };
 
   return (
@@ -103,6 +111,10 @@ export default function Home() {
           >
             {carouselSlides.map((slide, index) => {
               const isActive = index === currentSlide;
+              const backgroundImage = slide.mobileImage 
+                ? `url(${slide.mobileImage})` // Mobile image for small screens
+                : `url(${slide.image})`; // Default image
+              
               return (
                 <Link
                   key={index}
@@ -111,19 +123,42 @@ export default function Home() {
                     isActive ? 'opacity-100' : 'opacity-0'
                   }`}
                   style={{
-                    backgroundImage: `url(${slide.image})`,
+                    backgroundImage: backgroundImage,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     zIndex: isActive ? 10 : 1,
                     pointerEvents: isActive ? 'auto' : 'none'
                   }}
                   onClick={(e) => {
-                    // Prevent navigation if this was a swipe gesture
-                    if (Math.abs(touchStart - touchEnd) > 50) {
+                    if (isSwiping) {
                       e.preventDefault();
                     }
                   }}
                 >
+                  {/* Mobile-specific background for slides with mobile images */}
+                  {slide.mobileImage && (
+                    <div 
+                      className="absolute inset-0 lg:hidden"
+                      style={{
+                        backgroundImage: `url(${slide.mobileImage})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center'
+                      }}
+                    />
+                  )}
+                  
+                  {/* Desktop background */}
+                  {slide.mobileImage && (
+                    <div 
+                      className="absolute inset-0 hidden lg:block"
+                      style={{
+                        backgroundImage: `url(${slide.image})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center'
+                      }}
+                    />
+                  )}
+                  
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
                   
                   <div className="absolute bottom-4 lg:bottom-8 left-4 lg:left-8 text-white pointer-events-none">
@@ -319,65 +354,40 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-16 text-white font-thin tracking-wide">UPCOMING SHOWINGS</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
-            {/* Cinema On the Bayou - After */}
-            <Link href="/events" className="block h-full">
-              <div className="bg-black rounded-lg overflow-hidden shadow-lg border border-gray-700 hover:border-yellow-500 transition-colors h-full flex flex-col">
-                <div className="p-6 flex-1 flex flex-col">
-                  <div className="flex items-start justify-between mb-4 flex-1">
-                    <div className="flex-1">
-                      <h3 className="text-white text-xl font-bold mb-2">After</h3>
-                      <p className="text-gray-300 text-sm mb-1">Cinema On the Bayou Film Festival</p>
-                      <p className="text-gray-400 text-sm">Lafayette, Louisiana</p>
+            {events.filter(event => event.status === 'upcoming').map((event) => (
+              <Link key={event.id} href="/events" className="block h-full">
+                <div className="bg-black rounded-lg overflow-hidden shadow-lg border border-gray-700 hover:border-yellow-500 transition-colors h-full flex flex-col">
+                  <div className="p-6 flex-1 flex flex-col">
+                    <div className="flex items-start justify-between mb-4 flex-1">
+                      <div className="flex-1">
+                        <h3 className="text-white text-xl font-bold mb-2">{event.title}</h3>
+                        <p className="text-gray-300 text-sm mb-1">{event.subtitle}</p>
+                        {event.venue !== event.title && (
+                          <p className="text-gray-300 text-sm mb-1">{event.venue}</p>
+                        )}
+                        <p className="text-gray-400 text-sm">{event.location}</p>
+                      </div>
+                      <div className="text-right flex-shrink-0">
+                        <p className="text-yellow-400 font-semibold">{new Date(event.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
+                        <p className="text-yellow-400 text-sm">{event.time}</p>
+                        <p className="text-gray-400 text-sm">{new Date(event.date).getFullYear()}</p>
+                      </div>
                     </div>
-                    <div className="text-right flex-shrink-0">
-                      <p className="text-yellow-400 font-semibold">Jan 21-28</p>
-                      <p className="text-gray-400 text-sm">2025</p>
-                    </div>
+                    {event.link && (
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(event.link, '_blank');
+                        }}
+                        className="inline-block bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors cursor-pointer self-start"
+                      >
+                        {event.type === 'Festival Screening' ? 'Festival Info' : 'Event Info'}
+                      </button>
+                    )}
                   </div>
-                  <button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      window.open('https://cinemaonthebayou.com/', '_blank');
-                    }}
-                    className="inline-block bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors cursor-pointer self-start"
-                  >
-                    Festival Info
-                  </button>
                 </div>
-              </div>
-            </Link>
-
-            {/* Robinson Theatre - NHP Presents */}
-            <Link href="/events" className="block h-full">
-              <div className="bg-black rounded-lg overflow-hidden shadow-lg border border-gray-700 hover:border-yellow-500 transition-colors h-full flex flex-col">
-                <div className="p-6 flex-1 flex flex-col">
-                  <div className="flex items-start justify-between mb-4 flex-1">
-                    <div className="flex-1">
-                      <h3 className="text-white text-xl font-bold mb-2">NHP Presents</h3>
-                      <p className="text-gray-300 text-sm mb-1">Donor, After & Dead Air</p>
-                      <p className="text-gray-300 text-sm mb-1">Robinson Film Center</p>
-                      <p className="text-gray-400 text-sm">Shreveport, Louisiana</p>
-                    </div>
-                    <div className="text-right flex-shrink-0">
-                      <p className="text-yellow-400 font-semibold">Jan 9</p>
-                      <p className="text-yellow-400 text-sm">6:00 PM</p>
-                      <p className="text-gray-400 text-sm">2025</p>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      window.open('https://robinsonfilmcenter.org/', '_blank');
-                    }}
-                    className="inline-block bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors cursor-pointer self-start"
-                  >
-                    Theater Info
-                  </button>
-                </div>
-              </div>
-            </Link>
-            
+              </Link>
+            ))}
           </div>
         </div>
       </section>

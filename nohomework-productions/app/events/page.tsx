@@ -13,7 +13,7 @@ export default function Events() {
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-yellow-400">Events</h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Join us for screenings, premieres, and special events featuring NoHomework Productions films.
+            Join us for screenings, premieres, and special events featuring No Homework Productions films.
           </p>
         </div>
       </section>
@@ -138,7 +138,7 @@ export default function Events() {
 
       {/* Footer */}
       <footer className="text-white p-4 text-center bg-black border-t border-gray-800">
-        <p>&copy; 2025 NoHomework Productions. All rights reserved.</p>
+        <p>&copy; 2025 No Homework Productions. All rights reserved.</p>
       </footer>
     </div>
   );

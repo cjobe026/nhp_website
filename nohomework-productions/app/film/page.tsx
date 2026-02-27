@@ -5,42 +5,9 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 import { films } from '../constants';
+import { newsArticles } from '@/lib/newsData';
 
-// Import news articles to find related ones
-const newsArticles = [
-  {
-    id: 'tampa-bay-nominations',
-    title: 'Multiple Nominations at Tampa Bay Underground Film Festival',
-    date: 'January 17, 2025',
-    image: '/donor-selection.png',
-    relatedFilm: 'Donor',
-    excerpt: 'Our Florida Premiere is this weekend with nominations for Best Short Film, Best Screenplay, Best Cinematography, and Best Crime/Thriller Film...'
-  },
-  {
-    id: 'donor-viewfinder-podcast',
-    title: '"Donor" featured on The Viewfinder Podcast with Chris Hadley',
-    date: 'April 5, 2024',
-    image: '/scene-photos/donor/card.png',
-    relatedFilm: 'Donor',
-    excerpt: 'After a successful screening at the inaugural Baton Rouge Underground Film Festival, members of the "Donor" team were interviewed by Chris Hadley...'
-  },
-  {
-    id: 'after-festival-selection',
-    title: '"After" selected for first film festival, will screen at Cinema on the Bayou Film Festival 2026',
-    date: 'January 25, 2025',
-    image: '/scene-photos/after/card.png',
-    relatedFilm: 'After',
-    excerpt: 'No Homework Productions latest project, "After", will start its festival journey close to home...'
-  },
-  {
-    id: 'dead-air-full-circle',
-    title: 'From box office pals to production partners, "Dead Air" is a full circle moment for writer/director Trevor L. Poole',
-    date: 'December 20, 2024',
-    image: '/scene-photos/dead-air/card.jpeg',
-    relatedFilm: 'Dead Air',
-    excerpt: 'A dream that was born over a decade ago in a musty box-office came to life in Fall 2024...'
-  },
-];
+// No longer need hardcoded newsArticles array
 
 type Film = {
   name: string;
@@ -270,16 +237,16 @@ function FilmPageContent() {
         
         {/* Related Articles */}
         {(() => {
-          const relatedArticles = newsArticles.filter(article => 
-            article.relatedFilm === filmData.name && 
-            !article.id.includes('directors-statement')
-          );
+          const relatedArticles = newsArticles.filter(article => {
+            const relatedFilms = article.relatedFilm ? [article.relatedFilm] : (article as any).relatedFilms || [];
+            return relatedFilms.includes(filmData.name) && !article.id.includes('directors-statement');
+          });
           return relatedArticles.length > 0 && (
             <div className="mt-12">
               <h3 className="text-2xl font-semibold mb-6">Related Articles</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {relatedArticles.map((article, index) => (
-                  <Link key={index} href={`/news?article=${article.id}`} className="group">
+                  <Link key={index} href={`/news/${article.id}`} className="group">
                     <div className="bg-gray-50 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
                       <img 
                         src={article.image} 

@@ -16,20 +16,42 @@ const galleryData: Record<string, { images: Array<{ src: string; alt: string; ty
       { src: '/scene-photos/collect-call/bts3.jpeg', alt: 'Fog machine magic', type: 'BTS', height: 'short' },
       { src: '/scene-photos/collect-call/bts4.jpeg', alt: 'Garrett Boone - clapper loader extraordinaire', type: 'BTS', height: 'medium' },
       { src: '/scene-photos/collect-call/bts5.jpeg', alt: 'Lighting setup for night scene', type: 'BTS', height: 'tall' },
-      { src: '/scene-photos/collect-call/bts6.jpeg', alt: 'Final shot setup', type: 'BTS', height: 'short' },
-      { src: '/scene-photos/collect-call/bts7.jpeg', alt: '', type: 'BTS', height: 'medium' },
-      { src: '/scene-photos/collect-call/bts8.jpeg', alt: 'Wrap celebration', type: 'BTS', height: 'tall' }
+      { src: '/scene-photos/collect-call/bts7.jpeg', alt: '', type: 'BTS', height: 'medium' }
     ]
   },
   'donor': {
     images: [
-      { src: '/scene-photos/donor/poster1.png', alt: 'Donor Official Poster', type: 'Poster', height: 'tall' },
-      { src: '/scene-photos/donor/poster2.png', alt: 'Donor Alternative Poster', type: 'Poster', height: 'tall' }
+      { src: '/scene-photos/donor/poster1.jpg', alt: 'Donor Official Poster', type: 'Poster', height: 'tall' },
+      { src: '/scene-photos/donor/poster2.png', alt: 'Donor Alternative Poster', type: 'Poster', height: 'tall' },
+      { src: '/scene-photos/donor/poster3.jpg', alt: 'Donor Third Poster', type: 'Poster', height: 'tall' },
+      { src: '/scene-photos/donor/poster4.png', alt: 'Donor Fourth Poster', type: 'Poster', height: 'tall' },
+      { src: '/scene-photos/donor/poster5.jpg', alt: 'Donor Fifth Poster', type: 'Poster', height: 'tall' },
+      { src: '/scene-photos/donor/poster6.jpg', alt: 'Donor Sixth Poster', type: 'Poster', height: 'tall' },
+      { src: '/scene-photos/donor/bts1.jpg', alt: 'JaCayla Smith (Lighting Tech) channeling her inner Jedi', type: 'BTS', height: 'medium' },
+      { src: '/scene-photos/donor/bts2.jpg', alt: 'Producer Paige Ferrant standing in to get the shot for Director of Photography Brian McAllister', type: 'BTS', height: 'tall' },
+      { src: '/scene-photos/donor/bts3.jpg', alt: 'Production Designer Caleb Jobe making sure the fake baby\'s head is glistening', type: 'BTS', height: 'short' },
+      { src: '/scene-photos/donor/bts4.jpg', alt: 'Tre Wilson (Assistant Camera) vanity shot between takes', type: 'BTS', height: 'medium' },
+      { src: '/scene-photos/donor/bts5.jpg', alt: 'Gordy Cassel as Beth prepping for dramatic scene', type: 'BTS', height: 'tall' },
+      { src: '/scene-photos/donor/bts6.jpg', alt: 'Troy McClannahan (Audio Recordist) and Sara Patterson (Gaffer) goofing and gaffing', type: 'BTS', height: 'medium' },
+      { src: '/scene-photos/donor/bts7.jpg', alt: 'Sara Patterson (Gaffer) prepping the lighting for scene', type: 'BTS', height: 'short' },
+      { src: '/scene-photos/donor/bts8.jpg', alt: 'Wesley Boone (Director) evaluates the area for the perfect shot', type: 'BTS', height: 'tall' },
+      { src: '/scene-photos/donor/bts9.jpg', alt: 'Gordy Cassel as Beth prepares to knock out the next scene', type: 'BTS', height: 'medium' }
     ]
   },
   'dead air': {
     images: [
-      { src: '/scene-photos/dead-air/poster1.png', alt: 'Dead Air Official Poster', type: 'Poster', height: 'tall' }
+      { src: '/scene-photos/dead-air/poster1.jpg', alt: 'Dead Air Official Poster', type: 'Poster', height: 'tall' },
+      { src: '/scene-photos/dead-air/poster2.jpg', alt: 'Dead Air Alternative Poster', type: 'Poster', height: 'tall' },
+      { src: '/scene-photos/dead-air/bts1.jpg', alt: 'Camera tech JaCayla Smith and director of photography Brian Mcallister on set at Laugh Out Loud Comedy Club', type: 'BTS', height: 'medium' },
+      { src: '/scene-photos/dead-air/bts2.jpg', alt: 'Matt Margheim (Brendan) on set at Laugh Out Loud Comedy Club', type: 'BTS', height: 'tall' },
+      { src: '/scene-photos/dead-air/bts3.jpg', alt: 'Writer/Director Trevor L. Poole frames a shot on set at The Wedding Chapel at Bellevue Place.' , type: 'BTS', height: 'short' },
+      { src: '/scene-photos/dead-air/bts4.jpg', alt: 'Wesley Boone (Joey) mean-mugs the camera on set at Laugh Out Loud Comedy Club.', type: 'BTS', height: 'medium' },
+      { src: '/scene-photos/dead-air/bts5.jpg', alt: 'Writer/Director Trevor L. Poole studies the monitor during a shot at Laugh Out Loud Comedy Club.', type: 'BTS', height: 'tall' },
+      { src: '/scene-photos/dead-air/bts6.jpg', alt: 'Camera tech JaCayla Smith prepares the slate at Laugh Out Loud Comedy Club.', type: 'BTS', height: 'medium' },
+      { src: '/scene-photos/dead-air/bts7.jpg', alt: 'Director of photography Brian McAllister frames a shot on set at Laugh Out Loud Comedy Club.', type: 'BTS', height: 'short' },
+      { src: '/scene-photos/dead-air/bts8.jpg', alt: 'Camera tech JaCayla Smith and Writer/Director Trevor L. Poole practice a camera movement on set at Laugh Out Loud Comedy Club.', type: 'BTS', height: 'tall' },
+      { src: '/scene-photos/dead-air/bts9.jpg', alt: 'Sara Patterson (Leigh) shines during scene shot at Laugh Out Loud Comedy Club.', type: 'BTS', height: 'medium' },
+      { src: '/scene-photos/dead-air/bts10.jpg', alt: 'Lighting tech Tre Wilson and executive producer Justus Boone watch on as Wesley (Joey) screws around on stage at Laugh Out Loud Comedy Club.', type: 'BTS', height: 'short' }
     ]
   }
 };
@@ -125,7 +147,7 @@ function GalleryContent() {
                   <img
                     src={image.src}
                     alt={image.alt}
-                    className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-500 rounded-lg shadow-lg"
+                    className="w-full aspect-[2/3] object-cover group-hover:scale-105 transition-transform duration-500 rounded-lg shadow-lg"
                   />
                 </div>
               );

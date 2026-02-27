@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "export": "next export"
+    "export": "next export",
+    "predeploy": "node scripts/check-file-sizes.js",
+    "deploy": "npm run build && npm run predeploy && firebase deploy"
   },
   "dependencies": {
     "firebase-admin": "^13.1.0",

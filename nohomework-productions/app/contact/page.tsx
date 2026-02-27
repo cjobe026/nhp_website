@@ -30,7 +30,7 @@ export default function Contact() {
       <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-8 text-black">Contact Us</h1>
         <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-          Ready to bring your vision to life? Get in touch with NoHomework Productions for collaborations, 
+          Ready to bring your vision to life? Get in touch with No Homework Productions for collaborations, 
           investment opportunities, or general inquiries.
         </p>
 
