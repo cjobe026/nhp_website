@@ -1,31 +1,53 @@
 import Link from 'next/link'
 import {films} from '../constants'
 
+type Film = {
+  name: string;
+  Year: string;
+  Starring: string;
+  Image_src: string;
+  posterPath?: string;
+  Awards: string[];
+  YouTubeLink: string;
+  Synopsis?: string;
+  Description?: string;
+  ReleaseDate?: string;
+  Country?: string;
+  Language?: string;
+  Genres?: string[];
+  Cast?: { name: string; character: string }[];
+  Crew?: { name: string; role: string }[];
+  posterCount?: number;
+  fullMovieLink?: string;
+  relatedArticles?: { id: string; title: string; date: string; excerpt: string; image: string }[];
+  TimelinePosition?: number;
+  Status?: string;
+};
+
+
 export default function About() {
 
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
+      <div className="min-h-screen p-8 pt-24 bg-white">
+        <h3 className="text-3xl font-bold text-center mb-8 text-black">Our Films</h3>
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
   
-        {/* Team Section */}  
-        <h3 className="text-3xl font-bold text-center mb-8">Our Films</h3>
-
-            {films.map((film, index) => (
-               
-              <div key={index} className="text-center">
-                <Link href={`/film?film=${encodeURIComponent(film.name)}`} className="hover:text-gray-400">
-                  <img
-                    className="rounded-lg shadow-lg"
-                    src={film.Image_src}
-                    alt={film.name}
-                    width={300}
-                    height={200}
-                  />
-                  <h4 className="text-xl font-semibold">{film.name}</h4>
-                  <p className="mt-2 text-sm text-lightgrey-700">{film.Starring}</p>
-                </Link>
-              </div>
-
-            ))}
-            </div>
+          {films.filter(film => !film.hidden).sort((a, b) => parseInt(b.Year) - parseInt(a.Year)).map((film, index) => {
+            const posterPath = (film as Film & { posterPath?: string }).posterPath || `/scene-photos/${film.name.toLowerCase().replace(' ', '-')}/poster1.jpg`;
+            
+            return (
+              <Link key={index} href={`/film?film=${encodeURIComponent(film.name)}`} className="hover:opacity-80 transition-opacity">
+                <img
+                  className="w-full aspect-[2/3] object-cover rounded-lg shadow-lg hover:shadow-xl transition-shadow"
+                  src={posterPath}
+                  alt={`${film.name} Poster`}
+                />
+              </Link>
+            );
+          })}
+          </div>
+        </div>
+      </div>
     );
   }
