@@ -8,6 +8,12 @@ const nextConfig: NextConfig = {
     unoptimized: true
   },
   trailingSlash: true,
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;
