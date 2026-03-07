@@ -1,17 +1,22 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { newsArticles } from '@/lib/newsData';
+import { getArticles, getArticleBySlug } from '@/lib/firestore';
+
+export const revalidate = 60;
 
 export async function generateStaticParams() {
-  return newsArticles.map((article) => ({
-    slug: article.id,
-  }));
+  const articles = await getArticles();
+  return articles
+    .filter(article => article.slug)
+    .map((article) => ({
+      slug: article.slug,
+    }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const article = newsArticles.find(a => a.id === slug);
+  const article = await getArticleBySlug(slug);
   
   if (!article) {
     return {
@@ -38,7 +43,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const article = newsArticles.find(a => a.id === slug);
+  const article = await getArticleBySlug(slug);
+  const newsArticles = await getArticles();
   
   if (!article) {
     notFound();

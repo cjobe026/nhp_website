@@ -1,10 +1,11 @@
-'use client';
+import { getEvents } from '@/lib/firestore';
 
-import { events } from './events-data';
+export const revalidate = 60;
 
-export default function Events() {
-  const upcomingEvents = events.filter(event => event.status === 'upcoming');
-  const pastEvents = events.filter(event => event.status === 'past');
+export default async function Events() {
+  const allEvents = await getEvents();
+  const upcomingEvents = allEvents.filter(event => event.status === 'upcoming');
+  const pastEvents = allEvents.filter(event => event.status === 'past');
 
   return (
     <div className="min-h-screen bg-black text-white pt-20">

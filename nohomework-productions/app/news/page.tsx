@@ -1,5 +1,7 @@
 import Link from 'next/link';
-import { newsArticles } from '@/lib/newsData';
+import { getArticles } from '@/lib/firestore';
+
+export const revalidate = 60;
 
 const styles = `
   .line-clamp-2 {
@@ -10,7 +12,8 @@ const styles = `
   }
 `;
 
-export default function NewsPage() {
+export default async function NewsPage() {
+  const newsArticles = await getArticles();
   return (
     <div className="min-h-screen bg-white pt-16 md:pt-20">
       {/* Header Section */}
