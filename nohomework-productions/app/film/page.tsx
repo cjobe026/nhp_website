@@ -3,37 +3,15 @@
 import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-
-import { films } from '../constants';
+import { getFilms } from '../../lib/firestore';
+import type { Film } from '../../lib/firestore';
 import { newsArticles } from '@/lib/newsData';
-
-// No longer need hardcoded newsArticles array
-
-type Film = {
-  name: string;
-  Year: string;
-  Starring: string;
-  Image_src: string;
-  posterPath?: string;
-  Awards: string[];
-  YouTubeLink: string;
-  Synopsis?: string;
-  Description?: string;
-  ReleaseDate?: string;
-  Country?: string;
-  Language?: string;
-  Genres?: string[];
-  Cast?: { name: string; character: string }[];
-  Crew?: { name: string; role: string }[];
-  posterCount?: number;
-  fullMovieLink?: string;
-  relatedArticles?: { id: string; title: string; date: string; excerpt: string; image: string }[];
-};
 
 function FilmPageContent() {
   const searchParams = useSearchParams();
   const filmName = searchParams.get('film');
   const [filmData, setFilmData] = useState<Film | null>(null);
+  const [loading, setLoading] = useState(true);
   const [showPosterGallery, setShowPosterGallery] = useState(false);
   const [currentPosterIndex, setCurrentPosterIndex] = useState(0);
   const [showDirectorsStatement, setShowDirectorsStatement] = useState(false);
@@ -47,14 +25,23 @@ function FilmPageContent() {
   // const groupCrewByDepartment = () => { ... };
 
   useEffect(() => {
-    if (filmName) {
-      const selectedFilm = films.find((f) => f.name.toLowerCase() === filmName.toLowerCase());
-      setFilmData(selectedFilm || null);
+    async function loadFilm() {
+      if (filmName) {
+        const allFilms = await getFilms();
+        const selectedFilm = allFilms.find((f) => f.name === filmName);
+        setFilmData(selectedFilm || null);
+      }
+      setLoading(false);
     }
+    loadFilm();
   }, [filmName]);
 
-  if (!filmData) {
-    return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-xl">Loading...</div>
+      </div>
+    );
   }
 
   return (

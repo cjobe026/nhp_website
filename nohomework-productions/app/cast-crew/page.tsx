@@ -3,12 +3,14 @@
 import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { films } from '../constants';
+import { getFilms } from '../../lib/firestore';
+import type { Film } from '../../lib/firestore';
 
 function CastCrewContent() {
   const searchParams = useSearchParams();
   const filmName = searchParams.get('film');
-  const [film, setFilm] = useState<typeof films[0] | null>(null);
+  const [film, setFilm] = useState<Film | null>(null);
+  const [loading, setLoading] = useState(true);
 
   // Group crew by department
   const groupCrewByDepartment = () => {
@@ -41,11 +43,24 @@ function CastCrewContent() {
   };
 
   useEffect(() => {
-    if (filmName) {
-      const selectedFilm = films.find(f => f.name === filmName);
-      setFilm(selectedFilm || null);
+    async function loadFilm() {
+      if (filmName) {
+        const allFilms = await getFilms();
+        const selectedFilm = allFilms.find(f => f.name === filmName);
+        setFilm(selectedFilm || null);
+      }
+      setLoading(false);
     }
+    loadFilm();
   }, [filmName]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-xl">Loading...</div>
+      </div>
+    );
+  }
 
   if (!filmName || !film) {
     return (
