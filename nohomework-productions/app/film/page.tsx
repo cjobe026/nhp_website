@@ -17,8 +17,8 @@ function FilmPageContent() {
   const [showDirectorsStatement, setShowDirectorsStatement] = useState(false);
 
   // Helper functions to extract key crew members
-  const getDirector = () => filmData?.Crew?.find(member => member.role.toLowerCase().includes('director'));
-  const getWriter = () => filmData?.Crew?.find(member => member.role.toLowerCase().includes('writer'));
+  const getDirector = () => (filmData as any)?.director || filmData?.Crew?.find(member => member.role.toLowerCase().includes('director') && !member.role.toLowerCase().includes('assistant'))?.name;
+  const getWriter = () => (filmData as any)?.writer || filmData?.Crew?.find(member => member.role.toLowerCase().includes('writer') && !member.role.toLowerCase().includes('assistant'))?.name;
   const getTopCast = () => filmData?.Cast?.slice(0, 3) || [];
   
   // Group crew by department (unused function removed)
@@ -139,13 +139,13 @@ function FilmPageContent() {
             {getDirector() && (
               <div>
                 <h4 className="font-semibold text-gray-900 mb-2">Director</h4>
-                <p className="text-gray-700">{getDirector()?.name}</p>
+                <p className="text-gray-700">{getDirector()}</p>
               </div>
             )}
             {getWriter() && (
               <div>
                 <h4 className="font-semibold text-gray-900 mb-2">Writer</h4>
-                <p className="text-gray-700">{getWriter()?.name}</p>
+                <p className="text-gray-700">{getWriter()}</p>
               </div>
             )}
             {getTopCast().length > 0 && (
@@ -180,7 +180,7 @@ function FilmPageContent() {
                 <div className="text-center mb-6">
                   <h3 className="text-2xl font-semibold mb-2">Director's Statement</h3>
                   {getDirector() && (
-                    <p className="text-gray-600 text-lg">{getDirector()?.name}</p>
+                    <p className="text-gray-600 text-lg">{getDirector()}</p>
                   )}
                 </div>
                 <div className="prose prose-lg max-w-none">
