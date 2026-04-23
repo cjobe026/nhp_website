@@ -90,7 +90,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             <div className="lg:col-span-2">
               <div className="bg-white rounded-2xl shadow-xl p-12">
                 <div 
-                  className="prose prose-xl max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-blue-600 prose-a:underline hover:prose-a:text-blue-800"
+                  className="article-content prose prose-xl max-w-none"
                   dangerouslySetInnerHTML={{ __html: article.content }}
                 />
               </div>
