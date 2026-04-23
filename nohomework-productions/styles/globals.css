@@ -26,18 +26,18 @@ body {
 
 /* Article content styling */
 .article-content a {
-  color: #2563eb;
-  text-decoration: underline;
+  color: #2563eb !important;
+  text-decoration: underline !important;
 }
 .article-content a:hover {
-  color: #1d4ed8;
+  color: #1d4ed8 !important;
 }
 .article-content h1, .article-content h2, .article-content h3 {
-  font-weight: bold;
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+  font-weight: bold !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.5rem !important;
 }
-.article-content h1 { font-size: 1.875rem; }
-.article-content h2 { font-size: 1.5rem; }
-.article-content h3 { font-size: 1.25rem; }
-.article-content p { margin-bottom: 1rem; }
+.article-content h1 { font-size: 1.875rem !important; }
+.article-content h2 { font-size: 1.5rem !important; }
+.article-content h3 { font-size: 1.25rem !important; }
+.article-content p { margin-bottom: 1rem !important; }
