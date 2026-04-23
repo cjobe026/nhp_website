@@ -5,6 +5,20 @@ import { getArticles, getArticleBySlug } from '@/lib/firestore';
 
 export const revalidate = 60;
 
+function formatDate(date: string): string {
+  if (!date) return '';
+  // If already in human-readable format (contains letters), return as-is
+  if (/[a-zA-Z]/.test(date)) return date;
+  // Handle YYYY-MM-DD format
+  if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    const parsed = new Date(date + 'T12:00:00');
+    if (!isNaN(parsed.getTime())) {
+      return parsed.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+  }
+  return date;
+}
+
 export async function generateStaticParams() {
   const articles = await getArticles();
   return articles
@@ -90,7 +104,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 Back to Home
               </Link>
               <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">{article.title}</h1>
-              <p className="text-xl text-white/90">{article.date ? new Date(article.date + 'T12:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : ''}</p>
+              <p className="text-xl text-white/90">{formatDate(article.date)}</p>
             </div>
           </div>
         </div>
@@ -147,7 +161,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                           <p className="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
                             {otherArticle.title}
                           </p>
-                          <p className="text-xs text-gray-500 mt-1">{otherArticle.date ? new Date(otherArticle.date + 'T12:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : ''}</p>
+                          <p className="text-xs text-gray-500 mt-1">{formatDate(otherArticle.date)}</p>
                         </div>
                       </div>
                     </Link>

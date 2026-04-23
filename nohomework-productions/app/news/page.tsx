@@ -3,6 +3,18 @@ import { getArticles } from '@/lib/firestore';
 
 export const revalidate = 60;
 
+function formatDate(date: string): string {
+  if (!date) return '';
+  if (/[a-zA-Z]/.test(date)) return date;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    const parsed = new Date(date + 'T12:00:00');
+    if (!isNaN(parsed.getTime())) {
+      return parsed.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+  }
+  return date;
+}
+
 const styles = `
   .line-clamp-2 {
     display: -webkit-box;
@@ -49,7 +61,7 @@ export default async function NewsPage() {
                   <h2 className="text-3xl font-bold mb-4 group-hover:text-blue-600 transition-colors">
                     {newsArticles[0].title}
                   </h2>
-                  <p className="text-gray-500 text-sm mb-4 uppercase tracking-wide">{newsArticles[0].date ? new Date(newsArticles[0].date + 'T12:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : ''}</p>
+                  <p className="text-gray-500 text-sm mb-4 uppercase tracking-wide">{formatDate(newsArticles[0].date)}</p>
                   <p className="text-gray-700 text-lg leading-relaxed">{newsArticles[0].excerpt}</p>
                 </div>
               </article>
@@ -73,7 +85,7 @@ export default async function NewsPage() {
                       <h3 className="font-bold text-lg mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
                         {article.title}
                       </h3>
-                      <p className="text-gray-500 text-xs mb-2 uppercase tracking-wide">{article.date ? new Date(article.date + 'T12:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : ''}</p>
+                      <p className="text-gray-500 text-xs mb-2 uppercase tracking-wide">{formatDate(article.date)}</p>
                       <p className="text-gray-600 text-sm line-clamp-2">{article.excerpt}</p>
                     </div>
                   </div>
