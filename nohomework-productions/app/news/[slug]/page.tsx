@@ -57,6 +57,16 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
+    .article-content a {
+      color: #2563eb !important;
+      text-decoration: underline !important;
+    }
+    .article-content a:hover {
+      color: #1d4ed8 !important;
+    }
+    .article-content h1 { font-size: 1.875rem !important; font-weight: bold !important; margin: 1rem 0 0.5rem !important; }
+    .article-content h2 { font-size: 1.5rem !important; font-weight: bold !important; margin: 1rem 0 0.5rem !important; }
+    .article-content h3 { font-size: 1.25rem !important; font-weight: bold !important; margin: 1rem 0 0.5rem !important; }
   `;
 
   return (
