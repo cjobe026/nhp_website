@@ -90,7 +90,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 Back to Home
               </Link>
               <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">{article.title}</h1>
-              <p className="text-xl text-white/90">{article.date}</p>
+              <p className="text-xl text-white/90">{article.date ? new Date(article.date + 'T12:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : ''}</p>
             </div>
           </div>
         </div>
@@ -147,7 +147,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                           <p className="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
                             {otherArticle.title}
                           </p>
-                          <p className="text-xs text-gray-500 mt-1">{otherArticle.date}</p>
+                          <p className="text-xs text-gray-500 mt-1">{otherArticle.date ? new Date(otherArticle.date + 'T12:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : ''}</p>
                         </div>
                       </div>
                     </Link>
