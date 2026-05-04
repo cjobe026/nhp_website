@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import ClientLayout from './client-layout';
 
 export const metadata: Metadata = {
-  title: "NoHomework Productions",
+  title: "No Homework Productions",
   description: "No Homework Productions is a Louisiana-based film production studio founded by Wesley Boone, Justus Boone, Caleb Jobe, and Ian Jobe.",
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/favicon.ico',
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
   },
 };
 
